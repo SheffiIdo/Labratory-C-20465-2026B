@@ -3,4 +3,4 @@ project(Labratory_C C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(Labratory_C main.c)
+add_executable(maman11 maman11/maman11.c)
