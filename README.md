@@ -6,5 +6,5 @@ Assignments and projects for the **2026B** semester at the Open University.
 
 ## 🛠️ Environment
 * **IDE**: CLion
-* **Compiler**: GCC / Clang (macOS)
+* **Compiler**: GCC 
 * **Language Standard**: C11
