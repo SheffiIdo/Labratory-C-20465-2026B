@@ -1,9 +1,12 @@
 #include <stdio.h>
 
-/* In ANSI C, we use block comments like this instead of double slashes */
 int main() {
+    /* In ANSI C, declarations MUST come before any executable code */
+    int assignment_number = 11;
+
     printf("Hello, Open University!\n");
-    
-    /* Return 0 indicates the program finished successfully */
+    printf("Currently working on Maman %d.\n", assignment_number);
+    printf("The Ubuntu 24.04 environment is ready.\n");
+
     return 0;
 }
