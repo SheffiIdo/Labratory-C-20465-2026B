@@ -1,0 +1,40 @@
+name: CI for Labratory-C Program (Ubuntu 24.04)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-test:
+    # Explicitly target Ubuntu 24.04
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Updated to v4 for Node 20 support
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make diffutils
+
+      - name: Build and Run Tests
+        run: |
+          make
+          chmod +x Labratory-C
+          mkdir -p outputs
+          make run-test1
+          make run-test2
+
+      - name: Commit and push output files
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # Only commit if there are changes to avoid workflow errors
+          git add Labratory-C */*.out
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update binary and test results" && git push)
