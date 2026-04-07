@@ -1,0 +1,9 @@
+{
+  "name": "OU-C-Lab-Ubuntu-24.04",
+  "build": { "dockerfile": "Dockerfile" },
+  "customizations": {
+    "jetbrains": {
+      "backend": "CLion"
+    }
+  }
+}
