@@ -3,5 +3,5 @@ project(Labratory_C C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(maman11 maman11/remove_blanks/remove_blanks.c
-        maman11/remove_blanks/remove_blanks.c)
+add_executable(remove_blanks maman11/remove_blanks/remove_blanks.c)
+add_executable(turn_on maman11/turn_on/turn_on.c)

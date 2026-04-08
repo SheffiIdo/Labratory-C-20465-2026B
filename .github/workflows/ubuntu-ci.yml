@@ -46,7 +46,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
           # Explicitly add the compiled binary from its new subfolder
-          git add maman11/remove_blanks/remove_blanks
+          git add -f maman11/remove_blanks/remove_blanks
           
           # Safety check: Only push if the file actually changed.
           # If the binary is identical to the last run, this prevents the workflow from crashing.
