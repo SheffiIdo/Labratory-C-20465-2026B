@@ -1,0 +1,10 @@
+Please enter a string to process (max 1023 characters):
+
+The Input string:
+"
+"
+The string as received by the function:
+"
+"
+The string at the end of the function:
+""

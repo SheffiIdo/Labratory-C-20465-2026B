@@ -1,0 +1,2 @@
+Please enter a string to process (max 1023 characters):
+Error reading input.

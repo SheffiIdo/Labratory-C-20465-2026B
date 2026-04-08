@@ -1,36 +1,53 @@
-name: CI for C Laboratory (Ubuntu 24.04)
+# The name of the workflow as it will appear in the GitHub Actions tab
+name: CI for Maman 11 (Ubuntu 24.04)
 
+# Define when this workflow should run automatically
 on:
   push:
-    branches: [ master ]
+    branches: [ main, master ] # Runs every time you push to these branches
   pull_request:
-    branches: [ master ]
+    branches: [ main, master ]
 
+# Grant the GitHub Action bot permission to push changes back to your repository
 permissions:
   contents: write
 
 jobs:
   build-and-test:
-    # This matches the Ubuntu version in your Dev Container
+    # Use the latest Ubuntu environment
     runs-on: ubuntu-24.04
 
     steps:
+      # Step 1: Download your code onto the virtual machine
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Install standard C development tools (like gcc and make)
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc make
+          sudo apt-get install -y gcc make diffutils
 
-      - name: Build with Makefile
+      # Step 3: Navigate to the correct folder and compile the code
+      - name: Build Maman 11 Q1
         run: |
-          # This runs the 'all' target in your Makefile
+          # Move into the specific assignment folder before running make
+          cd maman11/remove_blanks 
           make
-          # Ensure the binary is executable
-          chmod +x m11
+          
+          # Later, you can add test execution here:
+          # ./remove_blanks < inputs/test1.txt > outputs/result1.txt
 
-      - name: Run Program
+      # Step 4: Commit the freshly compiled binary back to GitHub
+      - name: Commit and push binary
         run: |
-          # Run the program and show output in the Action logs
-          ./m11
+          # Configure the bot's identity for the commit
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Explicitly add the compiled binary from its new subfolder
+          git add maman11/remove_blanks/remove_blanks
+          
+          # Safety check: Only push if the file actually changed.
+          # If the binary is identical to the last run, this prevents the workflow from crashing.
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update compiled remove_blanks binary" && git push)
