@@ -4,3 +4,5 @@ cmake-build-release/
 *.o
 *.exe
 .DS_Store
+remove_blanks
+turn_on
