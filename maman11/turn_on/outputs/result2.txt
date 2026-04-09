@@ -1,0 +1,7 @@
+Please enter an integer number:
+
+Original number in Base 10: 65536
+Original number in Base 2:  0000000000000000000000000000000000000000000000010000000000000000
+The 17th bit from the right was already on, therefore no change
+Modified number in Base 10: 65536
+Modified number in Base 2:  0000000000000000000000000000000000000000000000010000000000000000

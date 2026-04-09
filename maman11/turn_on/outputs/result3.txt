@@ -1,0 +1,2 @@
+Please enter an integer number:
+Invalid input.

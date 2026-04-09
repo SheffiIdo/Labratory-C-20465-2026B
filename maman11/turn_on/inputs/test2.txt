@@ -1,0 +1,2 @@
+65536
+*/ Create Test 2: Testing a number where the 17th bit is already ON (65536) */

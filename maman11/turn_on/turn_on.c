@@ -55,39 +55,33 @@ long turn_on(long num) {
      */
     long mask = 1L << 16;
     
-    /* * Bitwise OR (|) compares bits one by one.
-     * 0 | 0 = 0
-     * 1 | 0 = 1
-     * 0 | 1 = 1
-     * 1 | 1 = 1
-     * * By OR-ing our number with the mask, all original bits remain exactly 
-     * as they were (since they are OR-ed with 0), EXCEPT the 17th bit, 
-     * which is forced to become 1.
+    /*
+     * * By OR our number with the mask, all original bits remain exactly
+     * as they were except the 17th bit, which is forced to become 1.
      */
     return num | mask;
 }
 
-/* =========================================================================
+/*
  * FUNCTION: print_binary
  * PURPOSE: Prints a long integer in binary (Base 2) format.
- * ========================================================================= */
+ */
 void print_binary(long num) {
     /* * Determine exactly how many bits make up a 'long' on this specific machine.
      * sizeof(long) gives the number of bytes. Multiply by 8 to get bits.
-     * (Usually 64 bits on modern 64-bit systems).
      */
     int num_bits = sizeof(long) * 8;
     int i;
     
-    /* * We want to print from left to right (Most Significant Bit down to Least).
-     * So we loop backwards from the highest index (63) down to 0.
+    /* * We want to print from left to right.
+     * So we loop backwards from the highest index down to 0.
      */
     for (i = num_bits - 1; i >= 0; i--) {
         
         /* Create a temporary mask with a '1' at the current bit index 'i' */
         long mask = 1L << i;
         
-        /* * Bitwise AND (&) checks if both bits are 1.
+        /*
          * If the bit in our number at index 'i' is a 1, (num & mask) yields a non-zero value (True).
          * If the bit in our number is a 0, (num & mask) yields 0 (False).
          */
