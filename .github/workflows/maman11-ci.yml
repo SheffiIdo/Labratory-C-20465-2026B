@@ -7,12 +7,12 @@ on:
     branches: [ main, master ] # Runs every time you push to these branches
     paths:
       - 'maman11/**'
-      - '.github/workflows/**'
+      - '.github/workflows/maman11-ci.yml'
   pull_request:
     branches: [ main, master ]
     paths:
       - 'maman11/**'
-      - '.github/workflows/**'
+      - '.github/workflows/maman11-ci.yml'
 
 # Grant the GitHub Action bot permission to push changes back to your repository
 permissions:
