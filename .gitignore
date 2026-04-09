@@ -4,5 +4,5 @@ cmake-build-release/
 *.o
 *.exe
 .DS_Store
-remove_blanks
-turn_on
+maman11/remove_blanks/remove_blanks
+maman11/turn_on/turn_on

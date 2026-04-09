@@ -1,4 +1,4 @@
-# Makefile for Maman 11 - Question 1
+# Makefile for Maman 11 - Question 2
 
 # Define the compiler to use
 CC = gcc
@@ -10,7 +10,7 @@ CC = gcc
 CFLAGS = -Wall -ansi -pedantic
 
 # The name of the final executable file.
-TARGET = remove_blanks
+TARGET = turn_on
 
 # The 'all' target is the default. If you just type 'make' in the terminal, it runs this.
 all: $(TARGET)
