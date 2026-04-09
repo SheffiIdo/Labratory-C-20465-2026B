@@ -1,7 +1,16 @@
+/*
+* Program: remove_blanks.c
+* Purpose: This program receives a string of text from the user via standard
+* input and processes it to remove consecutive whitespace characters
+* (such as spaces, tabs and new line), condensing them into a single space.
+* Then prints both the original string and the modified string to demonstrate the text processing.
+* Name: Ido Sheffi
+* ID: 208138974
+*/
 #include <stdio.h>
 #include <ctype.h> /* Required for isspace() */
 
-#define MAX_LEN 1024 /* Define a reasonable maximum length as per the instructions */
+#define MAX_LEN 100 /* Define a reasonable maximum length as per the instructions */
 
 /* Function Prototype */
 void remove_blanks(char str[]);
@@ -19,7 +28,6 @@ int main() {
 
         /* Print the original string before modification */
         printf("\nThe Input string:\n\"%s\"\n", my_string);
-        printf("The string as received by the function:\n\"%s\"\n", my_string);
 
         /* Call the function to modify the string */
         remove_blanks(my_string);
@@ -37,7 +45,7 @@ int main() {
 void remove_blanks(char str[]) {
     int read_idx = 0;
     int write_idx = 0;
-
+    printf("The string as received by the function:\n\"%s\"\n", str);
     /* Loop until we hit the end of the original string */
     while (str[read_idx] != '\0') {
 

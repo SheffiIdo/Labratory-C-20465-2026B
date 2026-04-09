@@ -1,3 +1,12 @@
+/*
+* Program: turn_on.c
+* Purpose: This program reads an integer from the user and turns on its 17th
+* bit from the right (index 16) using bitwise operators.
+* It prints the original number and the modified number in both Base 10 (decimal) and Base 2 (binary) formats.
+* It also evaluates and prints a message indicating whether the value was changed or if the target bit was already on.
+* Name: Ido Sheffi
+* ID: 208138974
+*/
 #include <stdio.h>
 
 /* Function prototypes */
@@ -49,14 +58,14 @@ int main() {
 long turn_on(long num) {
     /* * In C, bits are zero-indexed from right to left. 
      * This means the 1st bit is index 0, so the 17th bit is index 16.
-     * * '1L' represents the number 1 explicitly as a long integer.
+     * '1L' represents the number 1 explicitly as a long integer.
      * '<< 16' shifts that single '1' sixteen places to the left.
      * Our mask now looks like this in binary: 000...00010000000000000000
      */
     long mask = 1L << 16;
     
     /*
-     * * By OR our number with the mask, all original bits remain exactly
+     * By OR our number with the mask, all original bits remain exactly
      * as they were except the 17th bit, which is forced to become 1.
      */
     return num | mask;
@@ -67,13 +76,13 @@ long turn_on(long num) {
  * PURPOSE: Prints a long integer in binary (Base 2) format.
  */
 void print_binary(long num) {
-    /* * Determine exactly how many bits make up a 'long' on this specific machine.
+    /* Determine exactly how many bits make up a 'long' on this specific machine.
      * sizeof(long) gives the number of bytes. Multiply by 8 to get bits.
      */
     int num_bits = sizeof(long) * 8;
     int i;
     
-    /* * We want to print from left to right.
+    /* We want to print from left to right.
      * So we loop backwards from the highest index down to 0.
      */
     for (i = num_bits - 1; i >= 0; i--) {
