@@ -37,9 +37,11 @@ jobs:
       # Step 3: Navigate to the correct folder and compile the code
       - name: Build Maman 11 Q1
         run: |
+      - name: Build Maman 11 Q2
+        run: |
+          cd maman11/turn_on
+          make    
           # Move into the specific assignment folder before running make
-          cd maman11/remove_blanks 
-          make
           
           # Later, you can add test execution here:
           # ./remove_blanks < inputs/test1.txt > outputs/result1.txt
