@@ -1,4 +1,4 @@
-Please enter a string to process (max 1023 characters):
+Please enter a string to process (max 99 characters):
 
 The Input string:
 "

@@ -8,7 +8,8 @@
 * ID: 208138974
 */
 #include <stdio.h>
-
+/* Define the bit target to turn on */
+#define TARGET_BIT 17
 /* Function prototypes */
 long turn_on(long num);
 void print_binary(long num);
@@ -33,9 +34,9 @@ int main() {
 
         /* Check if the value actually changed to determine our output message */
         if (original_num != modified_num) {
-            printf("After turning on the 17th bit from the right: A change occurred\n");
+            printf("After turning on the %dth bit from the right: A change occurred\n", TARGET_BIT);
         } else {
-            printf("The 17th bit from the right was already on, therefore no change\n");
+            printf("The %dth bit from the right was already on, therefore no change\n", TARGET_BIT);
         }
 
         /* Print the "After" state */
@@ -59,10 +60,12 @@ long turn_on(long num) {
     /* * In C, bits are zero-indexed from right to left. 
      * This means the 1st bit is index 0, so the 17th bit is index 16.
      * '1L' represents the number 1 explicitly as a long integer.
+     * We subtract 1 to convert from the human-readable position (17)
+     * to the zero-based index (16) required for bit shifting.
      * '<< 16' shifts that single '1' sixteen places to the left.
      * Our mask now looks like this in binary: 000...00010000000000000000
      */
-    long mask = 1L << 16;
+    long mask = 1L << (TARGET_BIT - 1);
     
     /*
      * By OR our number with the mask, all original bits remain exactly
