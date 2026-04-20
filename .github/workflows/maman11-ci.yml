@@ -39,11 +39,11 @@ jobs:
         run: |
           cd maman11/remove_blanks 
           make
-      # Move into the specific assignment folder before running make
+        # Move into the specific assignment folder before running make
                     
-      # Q1 TEST 1: Standard text processing
-      # Compares current output against the golden
-      # result and checks for memory leaks.
+        # Q1 TEST 1: Standard text processing
+        # Compares current output against the golden
+        # result and checks for memory leaks.
           
           echo "Running Valgrind Memory Check & Test 1..."
           valgrind --leak-check=full --error-exitcode=1 ./remove_blanks < inputs/test1.txt > current_result1.txt
@@ -69,11 +69,11 @@ jobs:
         run: |
           cd maman11/turn_on
           make    
-      # Move into the specific assignment folder before running make
+        # Move into the specific assignment folder before running make
           
-      # Q2 TEST 1: Standard text processing
-      # Compares current output against the golden
-      # result and checks for memory leaks.
+        # Q2 TEST 1: Standard text processing
+        # Compares current output against the golden
+        # result and checks for memory leaks.
           
           echo "Running Valgrind Memory Check & Test 1..."
           valgrind --leak-check=full --error-exitcode=1 ./turn_on < inputs/test1.txt > current_result1.txt
