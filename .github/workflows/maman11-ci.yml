@@ -33,7 +33,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc make diffutils valgrind
-
       - name: Build Maman 11 Q1
         run: |
           cd maman11/remove_blanks 
