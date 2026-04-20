@@ -65,3 +65,4 @@ void remove_blanks(char str[]) {
     /* Terminate the newly compacted string */
     str[write_idx] = '\0';
 }
+/* check */
