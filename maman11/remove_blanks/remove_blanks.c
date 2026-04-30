@@ -9,6 +9,7 @@
 */
 #include <stdio.h>
 #include <ctype.h> /* Required for isspace() */
+#include <string.h> /* For strcspn (to remove the newline) */
 
 #define MAX_LEN 100 /* Define a reasonable maximum length as per the instructions */
 
@@ -25,7 +26,8 @@ int main() {
      * We use fgets instead of scanf("%s") because scanf stops at the first space
      */
     if (fgets(my_string, MAX_LEN, stdin) != NULL) {
-
+        /* Remove the trailing newline if it exists */
+        my_string[strcspn(my_string, "\n")] = '\0';
         /* Print the original string before modification */
         printf("\nThe Input string:\n\"%s\"\n", my_string);
 
