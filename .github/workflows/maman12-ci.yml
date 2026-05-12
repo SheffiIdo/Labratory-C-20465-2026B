@@ -45,11 +45,13 @@ jobs:
           ./difference_and_sum < inputs/test2.txt > outputs/result2.txt
           ./difference_and_sum < inputs/test3.txt > outputs/result3.txt
           ./difference_and_sum < inputs/test4.txt > outputs/result4.txt
+          ./difference_and_sum < inputs/test5.txt > outputs/result5.txt
           
           echo "Checking Test 1..." && diff -w outputs/expected1.txt outputs/result1.txt
           echo "Checking Test 2..." && diff -w outputs/expected2.txt outputs/result2.txt
           echo "Checking Test 3..." && diff -w outputs/expected3.txt outputs/result3.txt
           echo "Checking Test 4..." && diff -w outputs/expected4.txt outputs/result4.txt
+          echo "Checking Test 5 (Empty)..." && diff -w outputs/expected5.txt outputs/result5.txt
           echo "All outputs match perfectly!"
           
           echo "=== Running Valgrind Memory Checks ==="
@@ -57,4 +59,5 @@ jobs:
           valgrind --leak-check=full --error-exitcode=1 ./difference_and_sum < inputs/test2.txt > /dev/null
           valgrind --leak-check=full --error-exitcode=1 ./difference_and_sum < inputs/test3.txt > /dev/null
           valgrind --leak-check=full --error-exitcode=1 ./difference_and_sum < inputs/test4.txt > /dev/null
-          echo "Zero memory leaks detected across all 4 tests!"
+          valgrind --leak-check=full --error-exitcode=1 ./difference_and_sum < inputs/test5.txt > /dev/null
+          echo "Zero memory leaks detected across all 5 tests!"

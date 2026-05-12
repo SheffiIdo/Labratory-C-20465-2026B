@@ -1,0 +1,8 @@
+Welcome to the Difference and Sum Calculator!
+Please enter pairs of integers (e.g., '1 3').
+Press Ctrl+D (or Ctrl+Z on Windows) to stop reading input.
+
+==================================
+Saved Pairs Array:
+No pairs were entered.
+==================================
