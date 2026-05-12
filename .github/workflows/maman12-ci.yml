@@ -1,0 +1,32 @@
+name: Maman 12 CI (Ubuntu 24.04)
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'maman12/**'
+      - '.github/workflows/maman12-ci.yml'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make diffutils valgrind
+
+      - name: Build and Memory Check Maman 12 Q1
+        run: |
+          cd maman12/difference_and_sum
+          
+          echo "Compiling difference_and_sum..."
+          # make
+          
+          # We will uncomment 'make' and add Valgrind tests once we write the C code and Makefile
+          echo "Maman 12 environment ready."
