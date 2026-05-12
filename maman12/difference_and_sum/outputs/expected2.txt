@@ -1,0 +1,18 @@
+Welcome to the Difference and Sum Calculator!
+Please enter pairs of integers (e.g., '1 3').
+Press Ctrl+D (or Ctrl+Z on Windows) to stop reading input.
+
+--- Processing Pair: 10 and 4 ---
+Function (Before): num1_copy is 10, num2_copy is 4
+Function (After):  num1_copy (sum) is 6 : num2_copy (diff) is 14
+Macro: The sum is 14 : The difference is 6
+
+--- Processing Pair: 3 and -2 ---
+Function (Before): num1_copy is 3, num2_copy is -2
+Function (After):  num1_copy (sum) is 5 : num2_copy (diff) is 1
+Macro: The sum is 1 : The difference is 5
+
+==================================
+Saved Pairs Array:
+[10, 4] [3, -2] 
+==================================

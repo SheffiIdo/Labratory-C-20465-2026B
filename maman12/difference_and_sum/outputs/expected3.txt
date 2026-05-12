@@ -1,0 +1,33 @@
+Welcome to the Difference and Sum Calculator!
+Please enter pairs of integers (e.g., '1 3').
+Press Ctrl+D (or Ctrl+Z on Windows) to stop reading input.
+
+--- Processing Pair: 1 and 2 ---
+Function (Before): num1_copy is 1, num2_copy is 2
+Function (After):  num1_copy (sum) is 1 : num2_copy (diff) is 3
+Macro: The sum is 3 : The difference is 1
+
+--- Processing Pair: 10 and 20 ---
+Function (Before): num1_copy is 10, num2_copy is 20
+Function (After):  num1_copy (sum) is 10 : num2_copy (diff) is 30
+Macro: The sum is 30 : The difference is 10
+
+--- Processing Pair: -5 and -5 ---
+Function (Before): num1_copy is -5, num2_copy is -5
+Function (After):  num1_copy (sum) is 0 : num2_copy (diff) is -10
+Macro: The sum is -10 : The difference is 0
+
+--- Processing Pair: 100 and 50 ---
+Function (Before): num1_copy is 100, num2_copy is 50
+Function (After):  num1_copy (sum) is 50 : num2_copy (diff) is 150
+Macro: The sum is 150 : The difference is 50
+
+--- Processing Pair: 0 and 0 ---
+Function (Before): num1_copy is 0, num2_copy is 0
+Function (After):  num1_copy (sum) is 0 : num2_copy (diff) is 0
+Macro: The sum is 0 : The difference is 0
+
+==================================
+Saved Pairs Array:
+[1, 2] [10, 20] [-5, -5] [100, 50] [0, 0] 
+==================================

@@ -1,0 +1,13 @@
+Welcome to the Difference and Sum Calculator!
+Please enter pairs of integers (e.g., '1 3').
+Press Ctrl+D (or Ctrl+Z on Windows) to stop reading input.
+
+--- Processing Pair: 8 and 9 ---
+Function (Before): num1_copy is 8, num2_copy is 9
+Function (After):  num1_copy (sum) is 1 : num2_copy (diff) is 17
+Macro: The sum is 17 : The difference is 1
+
+==================================
+Saved Pairs Array:
+[8, 9] 
+==================================

@@ -4,9 +4,21 @@ on:
   push:
     branches:
       - master
+      - main
     paths:
       - 'maman12/**'
       - '.github/workflows/maman12-ci.yml'
+  pull_request:
+    branches:
+      - master
+      - main
+    paths:
+      - 'maman12/**'
+      - '.github/workflows/maman12-ci.yml'
+
+# Grants the GITHUB_TOKEN write access to the repository
+permissions:
+  contents: write
 
 jobs:
   build-and-test:
@@ -21,12 +33,28 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gcc make diffutils valgrind
 
-      - name: Build and Memory Check Maman 12 Q1
+      - name: Build and Test Maman 12
         run: |
           cd maman12/difference_and_sum
           
-          echo "Compiling difference_and_sum..."
-          # make
+          echo "=== Compiling difference_and_sum ==="
+          make clean && make
           
-          # We will uncomment 'make' and add Valgrind tests once we write the C code and Makefile
-          echo "Maman 12 environment ready."
+          echo "=== Running Output Tests ==="
+          ./difference_and_sum < inputs/test1.txt > outputs/result1.txt
+          ./difference_and_sum < inputs/test2.txt > outputs/result2.txt
+          ./difference_and_sum < inputs/test3.txt > outputs/result3.txt
+          ./difference_and_sum < inputs/test4.txt > outputs/result4.txt
+          
+          echo "Checking Test 1..." && diff -w outputs/expected1.txt outputs/result1.txt
+          echo "Checking Test 2..." && diff -w outputs/expected2.txt outputs/result2.txt
+          echo "Checking Test 3..." && diff -w outputs/expected3.txt outputs/result3.txt
+          echo "Checking Test 4..." && diff -w outputs/expected4.txt outputs/result4.txt
+          echo "All outputs match perfectly!"
+          
+          echo "=== Running Valgrind Memory Checks ==="
+          valgrind --leak-check=full --error-exitcode=1 ./difference_and_sum < inputs/test1.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./difference_and_sum < inputs/test2.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./difference_and_sum < inputs/test3.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./difference_and_sum < inputs/test4.txt > /dev/null
+          echo "Zero memory leaks detected across all 4 tests!"
