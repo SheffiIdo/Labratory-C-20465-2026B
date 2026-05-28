@@ -7,14 +7,14 @@ on:
       - main
     paths:
       - 'maman22/**'
-      - '.github/workflows/maman22.yml'
+      - '.github/workflows/maman22-ci.yml'
   pull_request:
     branches:
       - master
       - main
     paths:
       - 'maman22/**'
-      - '.github/workflows/maman22.yml'
+      - '.github/workflows/maman22-ci.yml'
 
 # Grants the GITHUB_TOKEN write access to the repository
 permissions:
