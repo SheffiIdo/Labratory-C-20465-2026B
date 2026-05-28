@@ -9,6 +9,21 @@
 
 #define MAX_LINE 100 /* A generous buffer for user input lines */
 
+/* --- COMMAND PARSING MACROS --- */
+/* Single parameter commands (print_comp, abs_comp) */
+#define PARAMS_SINGLE 1
+#define PARSED_GARBAGE_SINGLE 2
+
+/* Dual parameter commands (add_comp, mult_comp_real, etc.) */
+#define PARAMS_DUAL 2
+#define COMMAS_DUAL 1
+#define PARSED_GARBAGE_DUAL 3
+
+/* Triple parameter commands (read_comp) */
+#define PARAMS_TRIPLE 3
+#define COMMAS_TRIPLE 2
+#define PARSED_GARBAGE_TRIPLE 4
+
 /* Helper functions Prototypes */
 void stop_comp(int *running_state);
 complex* get_variable(char var_name, complex *A, complex *B, complex *C, complex *D, complex *E, complex *F);
@@ -85,20 +100,20 @@ int main(void) {
                 int tokens = count_tokens(args);
 
                 /* Check params first */
-                if (tokens < 3) {
+                if (tokens < PARAMS_TRIPLE) {
                     printf("Missing parameter\n");
                     continue;
                 }
 
                 /* read_comp requires exactly 2 commas */
-                if (!validate_commas(args, 2)) {
+                if (!validate_commas(args, COMMAS_TRIPLE)) {
                     continue;
                 }
 
                 /* %lf used for parsing double variables */
                 parsed_items = sscanf(args, " %c , %lf , %lf %s", &var_name, &val_real, &val_imag, garbage);
 
-                if (parsed_items < 3) {
+                if (parsed_items < PARAMS_TRIPLE) {
                     /* If we have 2 commas but couldn't get 3 items, they typed letters instead of numbers */
                     printf("Invalid parameter - not a number\n");
                 } else {
@@ -107,7 +122,7 @@ int main(void) {
                     /* Check variable first, then check garbage */
                     if (target_var == NULL) {
                         printf("Undefined complex variable\n");
-                    } else if (parsed_items == 4) {
+                    } else if (parsed_items == PARSED_GARBAGE_TRIPLE) {
                         printf("Extraneous text after end of command\n");
                     } else {
                         /* Everything is valid, Call read_comp.*/
@@ -124,7 +139,7 @@ int main(void) {
                 int tokens = count_tokens(args);
 
                 /* Check params first */
-                if (tokens < 1) {
+                if (tokens < PARAMS_SINGLE) {
                     printf("Missing parameter\n");
                     continue;
                 }
@@ -139,7 +154,7 @@ int main(void) {
                     /* Check variable first, then check garbage */
                     if (target_var == NULL) {
                         printf("Undefined complex variable\n");
-                    } else if (parsed_items == 2) {
+                    } else if (parsed_items == PARSED_GARBAGE_SINGLE) {
                         printf("Extraneous text after end of command\n");
                     } else {
                         /* Everything is valid, execute the math! */
@@ -164,20 +179,20 @@ int main(void) {
                 int tokens = count_tokens(args);
 
                 /* Check params first */
-                if (tokens < 2) {
+                if (tokens < PARAMS_DUAL) {
                     printf("Missing parameter\n");
                     continue;
                 }
 
                 /* Pre-validate commas (We expect exactly 1 comma) */
-                if (!validate_commas(args, 1)) {
+                if (!validate_commas(args, COMMAS_DUAL)) {
                     continue; /* Error was already printed, skip to next line */
                 }
 
 
                 parsed_items = sscanf(args, " %c , %c %s", &var1_name, &var2_name, garbage);
 
-                if (parsed_items == EOF || parsed_items < 2) {
+                if (parsed_items == EOF || parsed_items < PARAMS_DUAL) {
                     printf("Missing parameter\n");
                 } else {
                     target_var1 = get_variable(var1_name, &A, &B, &C, &D, &E, &F);
@@ -186,7 +201,7 @@ int main(void) {
                     /* Check variable first, then check garbage */
                     if (target_var1 == NULL || target_var2 == NULL) {
                         printf("Undefined complex variable\n");
-                    } else if (parsed_items == 3) {
+                    } else if (parsed_items == PARSED_GARBAGE_DUAL) {
                         printf("Extraneous text after end of command\n");
                     } else {
                         /* Everything is valid! Execute the math. */
@@ -210,19 +225,19 @@ int main(void) {
                 int tokens = count_tokens(args);
 
                 /* Check params first */
-                if (tokens < 2) {
+                if (tokens < PARAMS_DUAL) {
                 printf("Missing parameter\n");
                 continue;
                 }
 
                 /* These commands require exactly 1 comma */
-                if (!validate_commas(args, 1)) {
+                if (!validate_commas(args, COMMAS_DUAL)) {
                     continue;
                 }
 
                 parsed_items = sscanf(args, " %c , %lf %s", &var_name, &multiplier, garbage);
 
-                if (parsed_items < 2) {
+                if (parsed_items < PARAMS_DUAL) {
                     printf("Invalid parameter - not a number\n");
                 } else {
                     target_var = get_variable(var_name, &A, &B, &C, &D, &E, &F);
@@ -230,7 +245,7 @@ int main(void) {
                     /* NEW ORDER: Check variable first, then check garbage */
                     if (target_var == NULL) {
                         printf("Undefined complex variable\n");
-                    } else if (parsed_items == 3) {
+                    } else if (parsed_items == PARSED_GARBAGE_DUAL) {
                         printf("Extraneous text after end of command\n");
                     } else {
                         if (strcmp(cmd_name, "mult_comp_real") == 0) {
