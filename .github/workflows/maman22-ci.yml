@@ -1,0 +1,48 @@
+name: Maman 22 CI (Ubuntu 24.04)
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - 'maman22/**'
+      - '.github/workflows/maman22.yml'
+  pull_request:
+    branches:
+      - master
+      - main
+    paths:
+      - 'maman22/**'
+      - '.github/workflows/maman22.yml'
+
+# Grants the GITHUB_TOKEN write access to the repository
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make
+
+      - name: Compile Maman 22
+        run: |
+          cd maman22/mycomp
+          
+          echo "=== Compiling mycomp ==="
+          make clean && make
+
+      - name: Quick Execution Test
+        run: |
+          cd maman22/mycomp
+          
+          echo "=== Testing EOF Handling ==="
+          ./mycomp < /dev/null
