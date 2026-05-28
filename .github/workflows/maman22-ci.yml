@@ -49,6 +49,7 @@ jobs:
           ./mycomp < inputs/test6.txt > outputs/result6.txt
           ./mycomp < inputs/test7.txt > outputs/result7.txt
           ./mycomp < inputs/test8.txt > outputs/result8.txt
+          ./mycomp < inputs/invaild_inputs.txt > outputs/result_invalid.txt
           
           echo "Checking Test 1 (Basic Math)..." && diff -w outputs/expected1.txt outputs/result1.txt
           echo "Checking Test 2 (Comma Validator)..." && diff -w outputs/expected2.txt outputs/result2.txt
@@ -58,6 +59,7 @@ jobs:
           echo "Checking Test 6 (Sudden EOF)..." && diff -w outputs/expected6.txt outputs/result6.txt
           echo "Checking Test 7 (Whitespace Chaos)..." && diff -w outputs/expected7.txt outputs/result7.txt
           echo "Checking Test 8 (Mutated Formatting)..." && diff -w outputs/expected8.txt outputs/result8.txt
+          echo "Checking Invalid Inputs Test..." && diff -w outputs/output_inalid.txt outputs/result_invalid.txt
           echo "All outputs match perfectly!"
           
           echo "=== Running Valgrind Memory Checks ==="
@@ -69,4 +71,5 @@ jobs:
           valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test6.txt > /dev/null
           valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test7.txt > /dev/null
           valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test8.txt > /dev/null
-          echo "Zero memory leaks detected across all 8 tests!"
+          valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/invaild_inputs.txt > /dev/null
+          echo "Zero memory leaks detected across all 9 tests!"

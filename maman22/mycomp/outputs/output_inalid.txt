@@ -1,0 +1,53 @@
+--- Welcome to the Complex Number Calculator ---
+Valid variables are A, B, C, D, E, F.
+
+Enter command > read_comp G, 3.1, 6.5
+Undefined complex variable
+
+Enter command > read_comp a, 3.6, 5.1
+Undefined complex variable
+
+Enter command > do_it A, B
+Undefined command name
+
+Enter command > Add_Comp A, C
+Undefined command name
+
+Enter command > read_comp A, 3.5, xyz
+Invalid parameter - not a number
+
+Enter command > read_comp A, 3.5
+Missing parameter
+
+Enter command > read_comp A, 3.5, -3,
+Extraneous text after end of command
+
+Enter command > add_comp B
+Missing parameter
+
+Enter command > print_comp C, D
+Extraneous text after end of command
+
+Enter command > sub_comp F, , D
+Multiple consecutive commas
+
+Enter command > mult_comp_comp F D
+Missing comma
+
+Enter command > mult_comp_real, A, 2.5
+Illegal comma
+
+Enter command > mult_comp_img A, B
+Invalid parameter - not a number
+
+Enter command > abs_comp
+Missing parameter
+
+Enter command > abs_comp 2.5
+Undefined complex variable
+
+Enter command > stop A #!
+Extraneous text after end of command
+
+Enter command > 
+Error: Reached End Of File (EOF) without 'stop' command.
