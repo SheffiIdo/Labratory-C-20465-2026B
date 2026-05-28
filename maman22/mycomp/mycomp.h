@@ -1,9 +1,6 @@
 #ifndef MYCOMP_H
 #define MYCOMP_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "complex.h"
 
 /* --- CONFIGURATION MACROS --- */
@@ -26,7 +23,9 @@
 
 /* --- HELPER FUNCTION PROTOTYPES --- */
 void stop_comp(int *running_state);
+
 complex* get_variable(char var_name, complex *A, complex *B, complex *C, complex *D, complex *E, complex *F);
+
 int validate_commas(char *args, int expected_commas);
 int count_tokens(char *args);
 

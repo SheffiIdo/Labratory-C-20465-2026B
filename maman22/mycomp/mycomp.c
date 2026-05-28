@@ -1,13 +1,20 @@
 /*
+* This is the main file of a program that handles complex numbers and supports 9 different commands.
+* The program allows the user to enter commands from the keyboard ot from text file, and accordingly executes the appropriate
+* command on the appropriate complex number. The program supports 9 different commands: print_comp, read_comp,
+* add_comp, sub_comp, mult_comp_real, mult_comp_img, mult_comp_comp, abs_comp, and stop.
 * Name: Ido Sheffi
 * ID: 208138974
 */
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "complex.h"
 #include "mycomp.h" /* Added another header with macros and helper function prototype*/
 
+/*
+ * This is the main function of the program.
+ * This function lets the user interact with the program.
+ */
 int main(void) {
     /* Define and initialize the 6 required variables to 0 + 0i */
     complex A = {0.0, 0.0};
