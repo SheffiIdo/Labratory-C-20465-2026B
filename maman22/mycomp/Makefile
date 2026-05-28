@@ -13,7 +13,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET) -lm
 
 # Compile the main file
-mycomp.o: mycomp.c complex.h
+mycomp.o: mycomp.c complex.h mycomp.h
 	$(CC) -c $(CFLAGS) mycomp.c -o mycomp.o
 
 # Compile the math engine

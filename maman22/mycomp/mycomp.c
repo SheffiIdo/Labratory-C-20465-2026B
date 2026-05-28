@@ -6,29 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "complex.h"
-
-#define MAX_LINE 100 /* A generous buffer for user input lines */
-
-/* --- COMMAND PARSING MACROS --- */
-/* Single parameter commands (print_comp, abs_comp) */
-#define PARAMS_SINGLE 1
-#define PARSED_GARBAGE_SINGLE 2
-
-/* Dual parameter commands (add_comp, mult_comp_real, etc.) */
-#define PARAMS_DUAL 2
-#define COMMAS_DUAL 1
-#define PARSED_GARBAGE_DUAL 3
-
-/* Triple parameter commands (read_comp) */
-#define PARAMS_TRIPLE 3
-#define COMMAS_TRIPLE 2
-#define PARSED_GARBAGE_TRIPLE 4
-
-/* Helper functions Prototypes */
-void stop_comp(int *running_state);
-complex* get_variable(char var_name, complex *A, complex *B, complex *C, complex *D, complex *E, complex *F);
-int validate_commas(char *args, int expected_commas);
-int count_tokens(char *args);
+#include "mycomp.h" /* Added another header with macros and helper function prototype*/
 
 int main(void) {
     /* Define and initialize the 6 required variables to 0 + 0i */
