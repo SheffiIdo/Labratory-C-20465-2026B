@@ -1,0 +1,5 @@
+add_comp A, B xyz
+abs_comp A B
+mult_comp_real A, 2.5 ,
+stop A
+stop

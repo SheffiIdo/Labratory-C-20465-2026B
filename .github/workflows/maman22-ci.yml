@@ -21,7 +21,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-24.04
 
     steps:
@@ -31,18 +31,42 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc make
+          sudo apt-get install -y gcc make diffutils valgrind
 
-      - name: Compile Maman 22
+      - name: Build and Test Maman 22
         run: |
           cd maman22/mycomp
           
           echo "=== Compiling mycomp ==="
           make clean && make
-
-      - name: Quick Execution Test
-        run: |
-          cd maman22/mycomp
           
-          echo "=== Testing EOF Handling ==="
-          ./mycomp < /dev/null
+          echo "=== Running Output Tests ==="
+          ./mycomp < inputs/test1.txt > outputs/result1.txt
+          ./mycomp < inputs/test2.txt > outputs/result2.txt
+          ./mycomp < inputs/test3.txt > outputs/result3.txt
+          ./mycomp < inputs/test4.txt > outputs/result4.txt
+          ./mycomp < inputs/test5.txt > outputs/result5.txt
+          ./mycomp < inputs/test6.txt > outputs/result6.txt
+          ./mycomp < inputs/test7.txt > outputs/result7.txt
+          ./mycomp < inputs/test8.txt > outputs/result8.txt
+          
+          echo "Checking Test 1 (Basic Math)..." && diff -w outputs/expected1.txt outputs/result1.txt
+          echo "Checking Test 2 (Comma Validator)..." && diff -w outputs/expected2.txt outputs/result2.txt
+          echo "Checking Test 3 (Missing/Invalid)..." && diff -w outputs/expected3.txt outputs/result3.txt
+          echo "Checking Test 4 (Garbage Text)..." && diff -w outputs/expected4.txt outputs/result4.txt
+          echo "Checking Test 5 (Complex Math)..." && diff -w outputs/expected5.txt outputs/result5.txt
+          echo "Checking Test 6 (Sudden EOF)..." && diff -w outputs/expected6.txt outputs/result6.txt
+          echo "Checking Test 7 (Whitespace Chaos)..." && diff -w outputs/expected7.txt outputs/result7.txt
+          echo "Checking Test 8 (Mutated Formatting)..." && diff -w outputs/expected8.txt outputs/result8.txt
+          echo "All outputs match perfectly!"
+          
+          echo "=== Running Valgrind Memory Checks ==="
+          valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test1.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test2.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test3.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test4.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test5.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test6.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test7.txt > /dev/null
+          valgrind --leak-check=full --error-exitcode=1 ./mycomp < inputs/test8.txt > /dev/null
+          echo "Zero memory leaks detected across all 8 tests!"

@@ -1,0 +1,5 @@
+add_comp A ,, B
+add_comp , A, B
+read_comp A 5.5, 4.2
+add_comp A B
+stop

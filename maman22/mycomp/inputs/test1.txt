@@ -1,0 +1,7 @@
+print_comp A
+read_comp A, 5.5, 4.2
+read_comp C, -2.5, 0.75
+print_comp A
+add_comp A, C
+sub_comp A, C
+stop

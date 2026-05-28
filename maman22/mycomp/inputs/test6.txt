@@ -1,0 +1,4 @@
+print_comp A
+read_comp B, 10.0, -5.5
+add_comp A, B
+abs_comp B

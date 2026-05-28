@@ -42,7 +42,14 @@ int main(void) {
             char cmd_name[MAX_LINE];
             int chars_read = 0;
             char *args;
-            printf("%s", line);
+            printf("%s", line); /* Print the exact input */
+
+            /* If the file ends with EOF, the line won't have a newline.
+             * This ensures our output format always stays clean.
+             */
+            if (strchr(line, '\n') == NULL) {
+                printf("\n");
+            }
 
             /* sscanf reads the first word into cmd_name.
              * %n stores the number of characters read into chars_read.

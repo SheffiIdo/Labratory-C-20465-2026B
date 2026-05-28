@@ -1,0 +1,6 @@
+read_comp D, 2.0, 3.0
+read_comp E, 4.0, -1.0
+mult_comp_comp D, E
+mult_comp_img D, 2.0
+abs_comp E
+stop

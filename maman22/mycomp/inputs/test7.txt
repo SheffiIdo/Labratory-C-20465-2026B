@@ -1,0 +1,7 @@
+print_comp      A
+	read_comp	C	,	-2.5	,	0.75
+add_comp C    ,    E
+
+  read_comp     F	,   -9.8954	   ,	2.56
+ mult_comp_real   F  ,  -9.99
+stop

@@ -1,0 +1,5 @@
+print_comp a
+read_comp H, 1, 2
+abs_comp
+read_comp A, 5.5, xyz
+stop
