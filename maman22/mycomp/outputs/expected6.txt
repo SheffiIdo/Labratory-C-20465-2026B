@@ -1,0 +1,16 @@
+--- Welcome to the Complex Number Calculator ---
+Valid variables are A, B, C, D, E, F.
+
+Enter command > print_comp A
+0.00+(0.00)i
+
+Enter command > read_comp B, 10.0, -5.5
+
+Enter command > add_comp A, B
+10.00+(-5.50)i
+
+Enter command > abs_comp B
+11.41
+
+Enter command > 
+Error: Reached End Of File (EOF) without 'stop' command.

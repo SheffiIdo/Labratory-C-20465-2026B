@@ -1,0 +1,22 @@
+--- Welcome to the Complex Number Calculator ---
+Valid variables are A, B, C, D, E, F.
+
+Enter command > print_compA
+Undefined command name
+
+Enter command > print_comp A,
+Extraneous text after end of command
+
+Enter command > read_comp A, 1.0
+Missing comma
+
+Enter command > read_comp 1, 1.0, 2.0
+Undefined complex variable
+
+Enter command > add_comp A, B, C
+Extraneous text after end of command
+
+Enter command > mult_comp_comp A B
+Missing comma
+
+Enter command > stop

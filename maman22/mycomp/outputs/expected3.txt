@@ -1,0 +1,16 @@
+--- Welcome to the Complex Number Calculator ---
+Valid variables are A, B, C, D, E, F.
+
+Enter command > print_comp a
+Undefined complex variable
+
+Enter command > read_comp H, 1, 2
+Undefined complex variable
+
+Enter command > abs_comp
+Missing parameter
+
+Enter command > read_comp A, 5.5, xyz
+Invalid parameter - not a number
+
+Enter command > stop

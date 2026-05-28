@@ -1,0 +1,19 @@
+--- Welcome to the Complex Number Calculator ---
+Valid variables are A, B, C, D, E, F.
+
+Enter command > print_comp      A
+0.00+(0.00)i
+
+Enter command > 	read_comp	C	,	-2.5	,	0.75
+
+Enter command > add_comp C    ,    E
+-2.50+(0.75)i
+
+Enter command > 
+
+Enter command >   read_comp     F	,   -9.8954	   ,	2.56
+
+Enter command >  mult_comp_real   F  ,  -9.99
+98.86+(-25.57)i
+
+Enter command > stop

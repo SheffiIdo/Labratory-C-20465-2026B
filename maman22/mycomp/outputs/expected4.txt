@@ -1,0 +1,16 @@
+--- Welcome to the Complex Number Calculator ---
+Valid variables are A, B, C, D, E, F.
+
+Enter command > add_comp A, B xyz
+Extraneous text after end of command
+
+Enter command > abs_comp A B
+Extraneous text after end of command
+
+Enter command > mult_comp_real A, 2.5 ,
+Extraneous text after end of command
+
+Enter command > stop A
+Extraneous text after end of command
+
+Enter command > stop

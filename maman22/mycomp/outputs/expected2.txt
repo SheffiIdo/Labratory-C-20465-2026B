@@ -1,0 +1,16 @@
+--- Welcome to the Complex Number Calculator ---
+Valid variables are A, B, C, D, E, F.
+
+Enter command > add_comp A ,, B
+Multiple consecutive commas
+
+Enter command > add_comp , A, B
+Illegal comma
+
+Enter command > read_comp A 5.5, 4.2
+Missing comma
+
+Enter command > add_comp A B
+Missing comma
+
+Enter command > stop

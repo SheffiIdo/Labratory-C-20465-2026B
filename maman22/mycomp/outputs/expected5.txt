@@ -1,0 +1,17 @@
+--- Welcome to the Complex Number Calculator ---
+Valid variables are A, B, C, D, E, F.
+
+Enter command > read_comp D, 2.0, 3.0
+
+Enter command > read_comp E, 4.0, -1.0
+
+Enter command > mult_comp_comp D, E
+11.00+(10.00)i
+
+Enter command > mult_comp_img D, 2.0
+-6.00+(4.00)i
+
+Enter command > abs_comp E
+4.12
+
+Enter command > stop
