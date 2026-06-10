@@ -1,3 +1,3 @@
-Error: The file 'inputs/short.in' has fewer than 15 characters.
-Error: Cannot open file 'inputs/missing.in'.
-File 'inputs/valid1.in': The ASCII code of the 15-th character is 73.
+File 'inputs/boundary.in': The ASCII code of the 2-th character is 50.
+File 'inputs/whitespace.in': The ASCII code of the 2-th character is 9.
+File 'inputs/windows.in': The ASCII code of the 2-th character is 13.

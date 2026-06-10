@@ -1,1 +1,1 @@
-Error: The first argument must be a positive integer.
+File 'inputs/boundary.in': The ASCII code of the 10-th character is 10.

@@ -7,14 +7,14 @@ on:
       - main
     paths:
       - 'maman23/**'
-      - '.github/workflows/maman23.yml'
+      - '.github/workflows/maman23-ci.yml'
   pull_request:
     branches:
       - master
       - main
     paths:
       - 'maman23/**'
-      - '.github/workflows/maman23.yml'
+      - '.github/workflows/maman23-ci.yml'
 
 permissions:
   contents: write
@@ -42,35 +42,31 @@ jobs:
         run: |
           cd maman23/seek
           
-          # Test 1: Valid multiple files
-          ./seek 5 inputs/valid1.in inputs/valid2.in > outputs/result1.txt 2>&1
-          
-          # Test 2: Non-fatal errors (short file, missing file, mixed with valid)
-          ./seek 15 inputs/valid1.in inputs/short.in inputs/missing.in > outputs/result2.txt 2>&1
-          
-          # Test 3: Fatal Error - Invalid 'n' (use || true so GitHub Actions doesn't stop on the intentional failure)
-          ./seek -5 inputs/valid1.in > outputs/result3.txt 2>&1 || true
-          ./seek abc inputs/valid1.in > outputs/result4.txt 2>&1 || true
-          
-          # Test 4: Fatal Error - Not enough arguments
-          ./seek > outputs/result5.txt 2>&1 || true
+          # Execute the 6 definitive test scenarios
+          ./seek 2 inputs/simple.in > outputs/result1.txt 2>&1 || true
+          ./seek 2 inputs/boundary.in inputs/whitespace.in inputs/windows.in > outputs/result2.txt 2>&1 || true
+          ./seek 10 inputs/boundary.in > outputs/result3.txt 2>&1 || true
+          ./seek 5 inputs/empty.in inputs/short.in inputs/missing.in > outputs/result4.txt 2>&1 || true
+          ./seek abc inputs/simple.in > outputs/result5.txt 2>&1 || true
           ./seek 5 > outputs/result6.txt 2>&1 || true
           
-          echo "Checking Test 1 (Valid Inputs)..." && diff -w outputs/expected1.txt outputs/result1.txt
-          echo "Checking Test 2 (Non-Fatal Errors)..." && diff -w outputs/expected2.txt outputs/result2.txt
-          echo "Checking Test 3 (Fatal: Negative N)..." && diff -w outputs/expected3.txt outputs/result3.txt
-          echo "Checking Test 4 (Fatal: Letter N)..." && diff -w outputs/expected4.txt outputs/result4.txt
-          echo "Checking Test 5 (Fatal: No Args)..." && diff -w outputs/expected5.txt outputs/result5.txt
-          echo "Checking Test 6 (Fatal: No Files)..." && diff -w outputs/expected6.txt outputs/result6.txt
-          echo "All outputs match perfectly!"
+          # Assertions via diff checking
+          echo "Checking Test 1 (Simple Success)..." && diff -w outputs/expected1.txt outputs/result1.txt
+          echo "Checking Test 2 (Multi-File Whitespace Success)..." && diff -w outputs/expected2.txt outputs/result2.txt
+          echo "Checking Test 3 (Exact Boundary End)..." && diff -w outputs/expected3.txt outputs/result3.txt
+          echo "Checking Test 4 (Combined Non-Fatal Errors)..." && diff -w outputs/expected4.txt outputs/result4.txt
+          echo "Checking Test 5 (Fatal Error: Non-numeric N)..." && diff -w outputs/expected5.txt outputs/result5.txt
+          echo "Checking Test 6 (Fatal Error: Missing Files)..." && diff -w outputs/expected6.txt outputs/result6.txt
+          echo "All 6 core verification configurations match perfectly!"
 
       - name: Run Valgrind Memory Checks
         run: |
           cd maman23/seek
           echo "=== Running Valgrind ==="
-          valgrind --leak-check=full --error-exitcode=1 ./seek 5 inputs/valid1.in inputs/valid2.in > /dev/null 2>&1
-          valgrind --leak-check=full --error-exitcode=1 ./seek 15 inputs/valid1.in inputs/short.in inputs/missing.in > /dev/null 2>&1
-          # We check fatal errors for memory leaks too!
-          valgrind --leak-check=full ./seek -5 inputs/valid1.in > /dev/null 2>&1 || true
-          valgrind --leak-check=full ./seek > /dev/null 2>&1 || true
-          echo "Zero memory leaks detected across all tests!"
+          valgrind --leak-check=full --error-exitcode=1 ./seek 2 inputs/simple.in > /dev/null 2>&1
+          valgrind --leak-check=full --error-exitcode=1 ./seek 2 inputs/boundary.in inputs/whitespace.in inputs/windows.in > /dev/null 2>&1
+          valgrind --leak-check=full --error-exitcode=1 ./seek 10 inputs/boundary.in > /dev/null 2>&1
+          valgrind --leak-check=full --error-exitcode=1 ./seek 5 inputs/empty.in inputs/short.in inputs/missing.in > /dev/null 2>&1
+          valgrind --leak-check=full ./seek abc inputs/simple.in > /dev/null 2>&1 || true
+          valgrind --leak-check=full ./seek 5 > /dev/null 2>&1 || true
+          echo "Zero memory leaks detected across all 6 validation states!"

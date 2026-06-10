@@ -1,2 +1,1 @@
-Error: Not enough arguments.
-Usage: ./seek <positive integer n> <file1> [file2...]
+Error: The first argument must be a positive integer.
