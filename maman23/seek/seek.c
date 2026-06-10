@@ -10,29 +10,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "seek.h" /* header file with the function prototype */
+#include "seek.h" /* header file with the macros and function prototype */
 
 int main(int argc, char *argv[]) {
     long n;
     int i;
 
     /* FATAL ERROR: Check argument count (Program name + n + at least 1 file = 3) */
-    if (argc < 3) {
+    if (argc < MIN_ARGS) {
         fprintf(stderr, "Error: Not enough arguments.\n");
         fprintf(stderr, "Usage: %s <positive integer n> <file1> [file2...]\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
     /* FATAL ERROR: Validate that argv[1] is entirely digits */
-    for (i = 0; argv[1][i] != '\0'; i++) {
-        if (!isdigit(argv[1][i])) {
+    for (i = 0; argv[ARG_N_INDEX][i] != '\0'; i++) {
+        if (!isdigit(argv[ARG_N_INDEX][i])) {
             fprintf(stderr, "Error: The first argument must be a positive integer.\n");
             exit(EXIT_FAILURE);
         }
     }
 
     /* Convert the validated string to a long integer */
-    n = atol(argv[1]);
+    n = atol(argv[ARG_N_INDEX]);
 
     /* Ensure it is strictly greater than 0 */
     if (n <= 0) {
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     }
 
     /* LOOP: Process each file provided in the command line */
-    for (i = 2; i < argc; i++) {
+    for (i = FIRST_FILE_INDEX; i < argc; i++) {
         process_file(argv[i], n);
     }
 
