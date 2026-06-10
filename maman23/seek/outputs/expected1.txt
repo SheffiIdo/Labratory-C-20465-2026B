@@ -1,0 +1,2 @@
+File 'inputs/valid1.in': The ASCII code of the 5-th character is 111.
+File 'inputs/valid2.in': The ASCII code of the 5-th character is 53.

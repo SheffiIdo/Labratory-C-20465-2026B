@@ -1,0 +1,2 @@
+Error: Not enough arguments.
+Usage: ./seek <positive integer n> <file1> [file2...]

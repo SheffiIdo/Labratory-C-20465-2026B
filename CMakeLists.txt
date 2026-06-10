@@ -9,3 +9,4 @@ add_executable(turn_on maman11/turn_on/turn_on.c)
 add_executable(mycomp maman22/mycomp/mycomp.c maman22/mycomp/complex.c
         maman22/mycomp/mycomp.h)
 target_link_libraries(mycomp m)
+add_executable(seek maman23/seek/seek.c maman23/seek/seek.h)
