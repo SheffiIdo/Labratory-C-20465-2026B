@@ -1,3 +1,12 @@
+/*
+ * This program accepts a positive integer 'n' and a list of files as command-line arguments.
+ * Uses 'fseek' to jump directly to the n-th character (offset n-1) from the start of each file.
+ * Reads the character at that position and prints its decimal ASCII code to stdout.
+ * Counts every byte in the file as a valid character position, including all whitespaces.
+ * Safely prints descriptive errors to stderr if a file is missing or too short to read.
+* Name: Ido Sheffi
+* ID: 208138974
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
