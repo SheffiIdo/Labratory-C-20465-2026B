@@ -14,13 +14,28 @@ typedef struct MacroNode {
  * INTERFACE FUNCTIONS FOR THE MACRO STORAGE ENGINE
  * ========================================================================= */
 
-/* Adds a new macro or appends text lines to an existing macro definition */
+/**
+ * Adds a new macro to the list, or appends a line of text to an existing macro's body.
+ * Handles all dynamic memory scaling automatically.
+ * @param head a double pointer to the head of the macro linked list
+ * @param name the string identifier of the macro
+ * @param line_text the text line to append to the macro's body
+ */
 void add_macro(MacroNode **head, const char *name, const char *line_text);
 
-/* Looks up a macro by its name. Returns the node if found, otherwise NULL */
+/**
+ * Iterates through the linked list to find a macro by its name.
+ * @param head a pointer to the head of the macro linked list
+ * @param name the string identifier of the macro to find
+ * @return a pointer to the MacroNode if found, or NULL if it does not exist
+ */
 MacroNode *find_macro(MacroNode *head, const char *name);
 
-/* Completely frees all dynamically allocated memory within the macro table */
+/**
+ * Frees all dynamically allocated memory within the macro table
+ * to prevent memory leaks.
+ * @param head a pointer to the head of the macro linked list
+ */
 void free_macro_table(MacroNode *head);
 
 #endif /* MACRO_TABLE_H */

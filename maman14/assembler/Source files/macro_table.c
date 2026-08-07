@@ -3,31 +3,21 @@
 #include "../Header files/macro_table.h"
 #include "../Header files/errors.h"
 
-/* =========================================================================
- * FUNCTION: find_macro
- * PURPOSE: Iterates through the linked list to find a macro by its name.
- * RETURNS: Pointer to the MacroNode if found, or NULL if it does not exist.
- * ========================================================================= */
 MacroNode *find_macro(MacroNode *head, const char *name) {
     MacroNode *current = head;
 
+    /* Traverse the linked list sequentially until the end */
     while (current != NULL) {
         if (strcmp(current->name, name) == STRING_MATCH) {
-            return current;
+            return current; /* Match found */
         }
-        current = current->next;
+        current = current->next; /* Step forward to the next node */
     }
 
-    return NULL;
+    return NULL; /* Macro not found in the list */
 }
 
-/* =========================================================================
- * FUNCTION: add_macro
- * PURPOSE: Adds a new macro to the list, or appends a line of text to an
- *          existing macro's body. Handles all dynamic memory scaling.
- * ========================================================================= */
 void add_macro(MacroNode **head, const char *name, const char *line_text) {
-    /* C90 standard requires all variable declarations at the top */
     MacroNode *existing = find_macro(*head, name);
     size_t old_len;
     size_t line_len;
@@ -35,10 +25,11 @@ void add_macro(MacroNode **head, const char *name, const char *line_text) {
     MacroNode *new_node;
 
     if (existing != NULL) {
-        /* CASE 1: MACRO EXISTS - APPEND TEXT */
+        /* Case 1: macro exists - append text */
         old_len = strlen(existing->body);
         line_len = strlen(line_text);
 
+        /* Reallocate memory to fit existing text and new text */
         new_body = realloc(existing->body, old_len + line_len + NULL_CHAR_LEN);
         if (new_body == NULL) {
             print_internal_error(ERROR_CODE_1);
@@ -48,12 +39,13 @@ void add_macro(MacroNode **head, const char *name, const char *line_text) {
         strcat(existing->body, line_text);
     }
     else {
-        /* CASE 2: NEW MACRO - CREATE NODE */
+        /* Case 2: new macro - create node */
         new_node = malloc(sizeof(MacroNode));
         if (new_node == NULL) {
             print_internal_error(ERROR_CODE_1);
         }
 
+        /* Allocate exact memory for strings plus the null terminator */
         new_node->name = malloc(strlen(name) + NULL_CHAR_LEN);
         new_node->body = malloc(strlen(line_text) + NULL_CHAR_LEN);
 
@@ -64,19 +56,17 @@ void add_macro(MacroNode **head, const char *name, const char *line_text) {
         strcpy(new_node->name, name);
         strcpy(new_node->body, line_text);
 
+        /* Insert the new node at the front of the linked list */
         new_node->next = *head;
         *head = new_node;
     }
 }
 
-/* =========================================================================
- * FUNCTION: free_macro_table
- * PURPOSE: Safely frees all dynamically allocated memory in the macro table.
- * ========================================================================= */
 void free_macro_table(MacroNode *head) {
     MacroNode *current = head;
     MacroNode *temp;
 
+    /* Walk through the list and free strings before freeing the node itself */
     while (current != NULL) {
         temp = current;
         current = current->next;
