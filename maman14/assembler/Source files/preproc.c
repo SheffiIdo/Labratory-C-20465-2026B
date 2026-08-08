@@ -122,9 +122,20 @@ int expand_macros(const char *filename) {
                 print_external_error(ERROR_CODE_9, current_loc);
                 error_found = TRUE;
             }
+            /* Buffer Overflow Protection (checks length before strcpy) */
+            else if (strlen(token2) > MAX_LABEL_LENGTH) {
+                print_external_error(ERROR_CODE_13, current_loc);
+                error_found = TRUE;
+            }
+            /* Validate the exact characters used in the macro name */
+            else if (is_valid_macro_name(token2) == FALSE) {
+                print_external_error(ERROR_CODE_14, current_loc);
+                error_found = TRUE;
+            }
             else {
                 is_inside_macro = TRUE;
                 strcpy(current_mcro_name, token2);
+                add_macro(&macro_table, current_mcro_name, "");
             }
             continue;
         }

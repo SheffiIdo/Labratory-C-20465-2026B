@@ -21,4 +21,11 @@ void trim_leading_whitespace(char *output, const char *input);
  */
 int is_reserved_word(const char *name);
 
+/**
+ * Checks if a macro name is valid (starts with a letter, contains only alnum or '_')
+ * @param name The macro name to validate
+ * @return TRUE if valid, FALSE otherwise
+ */
+int is_valid_macro_name(const char *name);
+
 #endif /* UTILS_H */

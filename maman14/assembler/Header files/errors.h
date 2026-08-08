@@ -35,6 +35,8 @@ typedef enum ERROR_CODES {
     ERROR_CODE_10,
     ERROR_CODE_11,
     ERROR_CODE_12,
+    ERROR_CODE_13,
+    ERROR_CODE_14,
 
     /*
      * INSTRUCTION PARSING ERRORS
