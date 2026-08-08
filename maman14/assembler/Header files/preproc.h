@@ -1,19 +1,20 @@
 #ifndef PREPROC_H
 #define PREPROC_H
 
-#include "../Header files/globals.h"
+#include "globals.h"
 
-/* =========================================================================
- * CORE PRE-PROCESSING INTERFACE
- * ========================================================================= */
-
-/*
- * Processes a raw input file (.as), expands all contained macros, and
- * outputs a clean intermediate file (.am).
+/**
+ * This function executes the First Phase of the compilation pipeline (Pre-Processing).
+ * Opens the raw source file (.as), identifies macro definitions, saves them
+ * into a dynamically linked macro table, and expands those macros into a
+ * new intermediate file (.am).
  *
- * Returns 1 (True) on complete success.
- * Returns 0 (False) if any syntactic or file errors occurred (and deletes the .am file).
+ * If any syntax errors are found, the errors are printed to stdout, and the flawed
+ * .am file is deleted to prevent the assembler from continuing with bad data.
+ *
+ * @param filename The full name of the source file including the ".as" extension.
+ * @return TRUE (1) if macro expansion was fully successful, FALSE (0) if any errors occurred.
  */
-int expand_macros(const char *base_filename);
+int expand_macros(const char *filename);
 
-#endif
+#endif /* PREPROC_H */
