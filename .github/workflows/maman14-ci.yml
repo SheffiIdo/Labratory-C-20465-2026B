@@ -5,16 +5,16 @@ on:
     branches:
       - master
       - main
-      paths:
-        - 'maman14/**'
-        - '.github/workflows/maman14-ci.yml'
-      pull_request:
-        branches:
-          - master
-          - main
-        paths:
-          - 'maman14/**'
-          - '.github/workflows/maman14-ci.yml'
+    paths:
+      - 'maman14/**'
+      - '.github/workflows/maman14-ci.yml'
+  pull_request:
+    branches:
+      - master
+      - main
+    paths:
+      - 'maman14/**'
+      - '.github/workflows/maman14-ci.yml'
 
 jobs:
   build:
