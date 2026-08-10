@@ -26,4 +26,11 @@ int is_reserved_word(const char *name);
  */
 int is_valid_macro_name(const char *name);
 
+/**
+ * Skips whitespace characters (spaces and tabs) and advances the string pointer.
+ * @param str A pointer to the string pointer.
+ */
+void skip_whitespace(char **str);
+
+
 #endif /* UTILS_H */

@@ -58,3 +58,10 @@ int is_valid_macro_name(const char *name) {
 
     return TRUE;
 }
+
+void skip_whitespace(char **str) {
+    /* Advance the pointer as long as the character is a space or tab */
+    while (**str != '\0' && (**str == ' ' || **str == '\t')) {
+        (*str)++;
+    }
+}
