@@ -6,7 +6,7 @@
 /* The Following array specifies the error code numbers and the corresponding error message. */
 
 Error errors[] = {
-        /* 0 - 10: System and Macro Errors */
+        /* 0 - 14: System and Macro Errors */
         {ERROR_CODE_0,  "No Error"},
         {ERROR_CODE_1,  "Failed to dynamically allocate memory"},
         {ERROR_CODE_2,  "Cannot open file for reading"},

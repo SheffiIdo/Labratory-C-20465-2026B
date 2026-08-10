@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
         printf(" ASSEMBLING FILE: %s\n", argv[i]);
         printf("==================================================\n");
 
-        /* --- PHASE 1: PRE-PROCESSOR --- */
+        /* PHASE 1: PRE-PROCESSOR */
         printf("Start pre-proc\n");
 
         /* argv[i] already contains the ".as", so we pass it directly */

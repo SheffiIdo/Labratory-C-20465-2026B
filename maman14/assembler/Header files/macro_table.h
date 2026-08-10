@@ -10,9 +10,9 @@ typedef struct MacroNode {
     struct MacroNode *next;   /* Pointer to the next macro node in the list */
 } MacroNode;
 
-/* =========================================================================
- * INTERFACE FUNCTIONS FOR THE MACRO STORAGE ENGINE
- * ========================================================================= */
+/*
+ * Functions for the macro storage engine
+ */
 
 /**
  * Adds a new macro to the list, or appends a line of text to an existing macro's body.

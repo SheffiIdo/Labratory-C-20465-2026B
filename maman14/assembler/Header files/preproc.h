@@ -8,7 +8,6 @@
  * Opens the raw source file (.as), identifies macro definitions, saves them
  * into a dynamically linked macro table, and expands those macros into a
  * new intermediate file (.am).
- *
  * If any syntax errors are found, the errors are printed to stdout, and the flawed
  * .am file is deleted to prevent the assembler from continuing with bad data.
  *

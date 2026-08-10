@@ -106,18 +106,22 @@ int expand_macros(const char *filename) {
 
             scanned_items = sscanf(trimmed, "%s %s %s", token1, token2, extra);
 
+            /* Check if the macro definition is missing a name */
             if (scanned_items < MACRO_DEF_TOKENS) {
                 print_external_error(ERROR_CODE_5, current_loc);
                 error_found = TRUE;
             }
+            /* Check if there is extra invalid text after the macro name */
             else if (scanned_items > MACRO_DEF_TOKENS) {
                 print_external_error(ERROR_CODE_6, current_loc);
                 error_found = TRUE;
             }
+            /* Prevent the use of reserved assembly language keywords as macro names */
             else if (is_reserved_word(token2) == TRUE) {
                 print_external_error(ERROR_CODE_8, current_loc);
                 error_found = TRUE;
             }
+            /* Prevent redefining a macro that has already been registered in the table */
             else if (find_macro(macro_table, token2) != NULL) {
                 print_external_error(ERROR_CODE_9, current_loc);
                 error_found = TRUE;
@@ -132,6 +136,7 @@ int expand_macros(const char *filename) {
                 print_external_error(ERROR_CODE_14, current_loc);
                 error_found = TRUE;
             }
+            /* Valid macro found */
             else {
                 is_inside_macro = TRUE;
                 strcpy(current_mcro_name, token2);
@@ -140,19 +145,20 @@ int expand_macros(const char *filename) {
             continue;
         }
 
-        /* -----------------------------------------------------------------
-         * CHECK FOR END OF MACRO ("mcroend")
-         * ----------------------------------------------------------------- */
+        /*
+         * Check for end of macro ("mcroend")
+         */
         if (strncmp(trimmed, MACRO_END_TOKEN, strlen(MACRO_END_TOKEN)) == STRING_MATCH &&
            (isspace((unsigned char)trimmed[strlen(MACRO_END_TOKEN)]) || trimmed[strlen(MACRO_END_TOKEN)] == '\0')) {
 
             scanned_items = sscanf(trimmed, "%s %s", token1, extra);
-
+            /* Check if there is extra invalid text after the mcroend keyword */
             if (scanned_items > MACRO_END_TOKENS) {
                 print_external_error(ERROR_CODE_7, current_loc);
                 error_found = TRUE;
             }
 
+            /* Close the current macro state and clear the active macro name */
             is_inside_macro = FALSE;
             current_mcro_name[0] = '\0';
             continue;
@@ -160,7 +166,8 @@ int expand_macros(const char *filename) {
 
         /*
          * Handle standard lines or macro body content
-          */
+         * Append the current line to the body of the open macro
+         */
         if (is_inside_macro == TRUE) {
             add_macro(&macro_table, current_mcro_name, line);
         }
@@ -171,6 +178,7 @@ int expand_macros(const char *filename) {
             sscanf(trimmed, "%s", first_word);
             found_macro = find_macro(macro_table, first_word);
 
+            /* Expand the macro if the first word matches a saved name, otherwise write the line verbatim */
             if (found_macro != NULL) {
                 fputs(found_macro->body, out_fp);
             } else {

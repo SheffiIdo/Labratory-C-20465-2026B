@@ -8,7 +8,7 @@
 #define FALSE 0
 
 /*
- *string and memory constants
+ * string and memory constants
  */
 #define STRING_MATCH 0           /* Return value of strcmp when strings match */
 #define NULL_CHAR_LEN 1          /* Extra byte required for '\0' */
@@ -35,7 +35,7 @@
 #define EXT_EXTENSION ".ext"     /* Externals output file */
 
 /*
- *syntax tokens and rules
+ * syntax tokens and rules
  */
 #define MACRO_START_TOKEN "mcro"
 #define MACRO_END_TOKEN "mcroend"
