@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include "../Header files/errors.h"
 
 /* The Following array specifies the error code numbers and the corresponding error message. */

@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <string.h>
-#include <ctype.h>
 #include "../Header files/utils.h"
+#include "../Header files/globals.h"
 
 void trim_leading_whitespace(char *output, const char *input) {
     while (isspace((unsigned char)*input)) {

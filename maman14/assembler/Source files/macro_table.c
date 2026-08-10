@@ -2,6 +2,7 @@
 #include <string.h>
 #include "../Header files/macro_table.h"
 #include "../Header files/errors.h"
+#include "../Header files/globals.h"
 
 MacroNode *find_macro(MacroNode *head, const char *name) {
     MacroNode *current = head;

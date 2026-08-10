@@ -1,8 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "globals.h"
-
 /**
  * Skips spaces and tabs at the start of a line and copies the remaining
  * characters into the output buffer.

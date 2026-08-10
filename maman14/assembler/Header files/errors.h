@@ -1,10 +1,6 @@
 #ifndef ERRORS_H
 #define ERRORS_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
 /* Represents the exact location of an error in the source code */
 typedef struct {
     char *file_name;

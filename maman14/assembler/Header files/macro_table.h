@@ -1,8 +1,6 @@
 #ifndef MACRO_TABLE_H
 #define MACRO_TABLE_H
 
-#include "../Header files/globals.h"
-
 /* Structure to represent a single macro definition node */
 typedef struct MacroNode {
     char *name;               /* Dynamically allocated macro name */

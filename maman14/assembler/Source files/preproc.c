@@ -6,6 +6,7 @@
 #include "../Header files/macro_table.h"
 #include "../Header files/errors.h"
 #include "../Header files/utils.h"
+#include "../Header files/globals.h"
 
 int expand_macros(const char *filename) {
     /* All variable declarations */

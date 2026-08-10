@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 #include "../Header files/symbol_table.h"
 #include "../Header files/errors.h"
 

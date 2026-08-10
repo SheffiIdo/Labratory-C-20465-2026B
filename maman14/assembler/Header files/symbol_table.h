@@ -1,9 +1,6 @@
 #ifndef SYMBOL_TABLE_H
 #define SYMBOL_TABLE_H
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "../Header files/globals.h"
 
 /* A node in the Symbol Table linked list */
