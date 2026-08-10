@@ -13,6 +13,7 @@
 #define STRING_MATCH 0           /* Return value of strcmp when strings match */
 #define NULL_CHAR_LEN 1          /* Extra byte required for '\0' */
 #define TERMINATOR_PADDING 2     /* Extra bytes for '\n' and '\0' in line buffers */
+#define MAX_MEMORY 4096          /* Maximum memory size of the imaginary machine */
 
 /*
  * assembler system constraints
@@ -42,5 +43,21 @@
 #define COMMENT_CHAR ';'
 #define MACRO_DEF_TOKENS 2
 #define MACRO_END_TOKENS 1
+
+/* Symbol attributes to distinguish label types in the Symbol Table */
+typedef enum {
+ CODE_SYMBOL,   /* For labels pointing to instructions */
+ DATA_SYMBOL,   /* For labels pointing to .db, .dh, .dw, .asciz */
+ EXTERN_SYMBOL, /* For .extern labels */
+ ENTRY_SYMBOL   /* For .entry labels */
+} SymbolAttribute;
+
+/* Enum for classifying the type of line being parsed */
+typedef enum {
+ INSTRUCTION_LINE,   /* e.g., add, sub, jmp */
+ DIRECTIVE_LINE,     /* e.g., .db, .asciz, .extern */
+ EMPTY_OR_COMMENT,   /* Blank lines or lines starting with ; */
+ ERROR_LINE          /* A line with a syntax error */
+} LineType;
 
 #endif

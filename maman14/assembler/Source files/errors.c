@@ -60,13 +60,14 @@ Error errors[] = {
         {-1,            ""},
         {-1,            ""},
 
-        /* 50 - 55: Data Directive & Label Errors */
+        /* 50 - 56: Data Directive & Label Errors */
         {ERROR_CODE_50, "Label declaration must end with ':'"},
         {ERROR_CODE_51, "Label is defined more than once in the source file"},
         {ERROR_CODE_52, "Illegal label name (must start with letter, alphanumeric, max 31 chars)"},
         {ERROR_CODE_53, "Data directive (.db, .dh, .dw) contains non-numeric values"},
         {ERROR_CODE_54, "Missing opening or closing quotes in .asciz directive"},
-        {ERROR_CODE_55, "Label is declared as .extern but is defined locally in the file"}
+        {ERROR_CODE_55, "Label is declared as .extern but is defined locally in the file"},
+        {ERROR_CODE_56, "Memory overflow: Instruction and Data counters exceed maximum memory"},
 };
 
 void print_internal_error(int error_code) {

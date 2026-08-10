@@ -1,8 +1,6 @@
 #ifndef PREPROC_H
 #define PREPROC_H
 
-#include "globals.h"
-
 /**
  * This function executes the First Phase of the compilation pipeline (Pre-Processing).
  * Opens the raw source file (.as), identifies macro definitions, saves them
