@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "../Header files/macro_table.h"
 #include "../Header files/errors.h"
 #include "../Header files/globals.h"
@@ -76,4 +77,26 @@ void free_macro_table(MacroNode *head) {
         free(temp->body);
         free(temp);
     }
+}
+
+int is_valid_macro_name(const char *name) {
+    int i;
+
+    if (name == NULL || name[0] == '\0') {
+        return FALSE;
+    }
+
+    /* Must start with a letter */
+    if (!isalpha((unsigned char)name[0])) {
+        return FALSE;
+    }
+
+    /* Remaining characters must be letters, numbers, or '_' */
+    for (i = 1; name[i] != '\0'; i++) {
+        if (!isalnum((unsigned char)name[i]) && name[i] != '_') {
+            return FALSE;
+        }
+    }
+
+    return TRUE;
 }

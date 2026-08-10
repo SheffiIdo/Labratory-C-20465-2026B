@@ -36,4 +36,11 @@ MacroNode *find_macro(MacroNode *head, const char *name);
  */
 void free_macro_table(MacroNode *head);
 
+/**
+ * Checks if a macro name is valid (starts with a letter, contains only letters, numbers or '_')
+ * @param name The macro name to validate
+ * @return TRUE if valid, FALSE otherwise
+ */
+int is_valid_macro_name(const char *name);
+
 #endif /* MACRO_TABLE_H */

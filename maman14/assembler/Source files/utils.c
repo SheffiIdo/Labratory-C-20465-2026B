@@ -36,29 +36,6 @@ int is_reserved_word(const char *name) {
     return FALSE;
 }
 
-
-int is_valid_macro_name(const char *name) {
-    int i;
-
-    if (name == NULL || name[0] == '\0') {
-        return FALSE;
-    }
-
-    /* Must start with a letter */
-    if (!isalpha((unsigned char)name[0])) {
-        return FALSE;
-    }
-
-    /* Remaining characters must be letters, numbers, or '_' */
-    for (i = 1; name[i] != '\0'; i++) {
-        if (!isalnum((unsigned char)name[i]) && name[i] != '_') {
-            return FALSE;
-        }
-    }
-
-    return TRUE;
-}
-
 void skip_whitespace(char **str) {
     /* Advance the pointer as long as the character is a space or tab */
     while (**str != '\0' && (**str == ' ' || **str == '\t')) {
