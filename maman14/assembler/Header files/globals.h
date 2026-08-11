@@ -13,18 +13,60 @@
 #define STRING_MATCH 0           /* Return value of strcmp when strings match */
 #define NULL_CHAR_LEN 1          /* Extra byte required for '\0' */
 #define TERMINATOR_PADDING 2     /* Extra bytes for '\n' and '\0' in line buffers */
+
+/*
+ * binary, memory, and conversion constants
+ */
+#define BITS_PER_BYTE 8
+#define BYTE_MASK 0xFF
+#define IMMED_MASK 0xFFFF
+#define BYTES_PER_INSTRUCTION 4
+#define DECIMAL_BASE 10
 #define MAX_MEMORY 4096          /* Maximum memory size of the imaginary machine */
+
+/*
+ * Instruction binary shift constants
+ */
+#define OPCODE_SHIFT 26
+#define RS_SHIFT 21
+#define RT_SHIFT 16
+#define RD_SHIFT 11
+#define FUNCT_SHIFT 6
+
+/*
+ * parsing boundaries
+ */
+#define MAX_OPERANDS 40
 
 /*
  * assembler system constraints
  */
 #define MAX_LINE_LENGTH 80       /* Max chars per line */
 #define LINE_BUFFER_SIZE (MAX_LINE_LENGTH + TERMINATOR_PADDING)
-
 #define MAX_LABEL_LENGTH 31      /* Max chars for a valid label/symbol name */
-
 #define IC_INIT_VALUE 100        /* Instruction Counter starting address */
 #define DC_INIT_VALUE 0          /* Data Counter starting address */
+
+/*
+ * Expected operand counts for instructions
+ */
+#define R_ARITHMETIC_OP_COUNT 3  /* e.g., add, sub, and, or, nor */
+#define R_COPY_OP_COUNT 2        /* e.g., move, mvhi, mvlo */
+#define I_TYPE_OP_COUNT 3
+
+/*
+ * Instruction opcode boundaries
+ */
+#define MIN_BRANCH_OPCODE 15
+#define MAX_BRANCH_OPCODE 18
+
+/*
+ * register and immediate boundaries
+ */
+#define MIN_REGISTER 0
+#define MAX_REGISTER 31
+#define MIN_IMMED -32768
+#define MAX_IMMED 32767
 
 /*
  * file extensions
@@ -59,5 +101,20 @@ typedef enum {
  EMPTY_OR_COMMENT,   /* Blank lines or lines starting with ; */
  ERROR_LINE          /* A line with a syntax error */
 } LineType;
+
+/* Enum for instruction architecture types */
+typedef enum {
+ R_TYPE,
+ I_TYPE,
+ J_TYPE,
+ UNKNOWN_TYPE
+} InstructionType;
+
+/* Struct defining a machine instruction's properties */
+typedef struct {
+ InstructionType type;   /* R_TYPE, I_TYPE, or J_TYPE */
+ int opcode;             /* 0-63 */
+ int funct;              /* Used for R-Type, 0 for others */
+} InstructionDef;
 
 #endif

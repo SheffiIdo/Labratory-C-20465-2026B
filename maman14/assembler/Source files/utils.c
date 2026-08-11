@@ -24,11 +24,11 @@ int is_reserved_word(const char *name) {
         strcmp(name, "sw") == STRING_MATCH || strcmp(name, "lh") == STRING_MATCH ||
         strcmp(name, "sh") == STRING_MATCH || strcmp(name, "jmp") == STRING_MATCH ||
         strcmp(name, "la") == STRING_MATCH || strcmp(name, "call") == STRING_MATCH ||
-        strcmp(name, "hlt") == STRING_MATCH ||
-        strcmp(name, ".db") == STRING_MATCH || strcmp(name, ".dh") == STRING_MATCH ||
-        strcmp(name, ".dw") == STRING_MATCH || strcmp(name, ".asciz") == STRING_MATCH ||
-        strcmp(name, ".entry") == STRING_MATCH || strcmp(name, ".extern") == STRING_MATCH ||
-        strcmp(name, "mcro") == STRING_MATCH || strcmp(name, "mcroend") == STRING_MATCH) {
+        strcmp(name, "hlt") == STRING_MATCH || strcmp(name, ".db") == STRING_MATCH ||
+        strcmp(name, ".dh") == STRING_MATCH || strcmp(name, ".dw") == STRING_MATCH ||
+        strcmp(name, ".asciz") == STRING_MATCH || strcmp(name, ".entry") == STRING_MATCH ||
+        strcmp(name, ".extern") == STRING_MATCH || strcmp(name, "mcro") == STRING_MATCH ||
+        strcmp(name, "mcroend") == STRING_MATCH) {
 
         return TRUE;
         }
