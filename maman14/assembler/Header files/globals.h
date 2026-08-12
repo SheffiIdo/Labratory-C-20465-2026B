@@ -55,6 +55,15 @@
 #define I_TYPE_OP_COUNT 3
 
 /*
+ * J-Type Instruction constraints
+ */
+#define J_TYPE_OP_COUNT 1
+#define J_TYPE_STOP_OP_COUNT 0
+#define REG_BIT_SHIFT 25
+#define JMP_OPCODE 30
+#define STOP_OPCODE 63
+
+/*
  * Instruction opcode boundaries
  */
 #define MIN_BRANCH_OPCODE 15

@@ -8,27 +8,21 @@
 #include <stdlib.h>
 
 /* Private helper function declarations */
-static int handle_directive_line(char *token, char *line_ptr, int has_label, char *label_name, int *DC, SymbolNode **head, location err_loc);
-static int handle_instruction_line(char *token, char *line_ptr, int has_label, char *label_name, int *IC, SymbolNode **head, location err_loc);
-static int process_string_directive(char *line_ptr, int *DC, location err_loc);
-static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, location err_loc);
+static int handle_directive_line(char *token, char *line_ptr, int has_label, char *label_name, int *DC, SymbolNode **head, unsigned char data_image[], location err_loc);
+static int handle_instruction_line(char *token, char *line_ptr, int has_label, char *label_name, int *IC, SymbolNode **head,unsigned char instruction_image[], location err_loc);
+static int process_string_directive(char *line_ptr, int *DC,unsigned char data_image[], location err_loc);
+static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item,unsigned char data_image[], location err_loc);
 static int process_extern_directive(char *line_ptr, SymbolNode **head, location err_loc);
-static int parse_r_type_instruction(char *line_ptr, InstructionDef *inst, int *IC, location err_loc);
-static int parse_i_type_instruction(char *line_ptr, InstructionDef *inst, int *IC, location err_loc);
+static int parse_r_type_instruction(char *line_ptr, InstructionDef *inst, int *IC,unsigned char instruction_image[], location err_loc);
+static int parse_i_type_instruction(char *line_ptr, InstructionDef *inst, int *IC,unsigned char instruction_image[], location err_loc);
+static int parse_j_type_instruction(char *line_ptr, InstructionDef *inst, int *IC,unsigned char instruction_image[], location err_loc);
 
-/* The arrays to store the binary image */
-unsigned char instruction_image[MAX_MEMORY];
-unsigned char data_image[MAX_MEMORY];
-
-int execute_first_pass(const char *filename, SymbolNode **head) {
+int execute_first_pass(const char *file_name, SymbolNode **head, unsigned char instruction_image[], unsigned char data_image[], int *IC, int *DC) {
     FILE *file;
     char line[LINE_BUFFER_SIZE];
     int line_num = 0;
     int error_flag = FALSE;
     int ch; /* Used for clearing the buffer if a line is too long */
-
-    int IC = IC_INIT_VALUE;
-    int DC = DC_INIT_VALUE;
 
     location err_loc;
     err_loc.file_name = (char *)filename;
@@ -106,11 +100,11 @@ int execute_first_pass(const char *filename, SymbolNode **head) {
          * If the token starts with a '.', it's a directive. Otherwise, it's an instruction.
         */
         if (first_token[0] == '.') {
-            if (handle_directive_line(first_token, ptr, has_label, label_name, &DC, head, err_loc) == FALSE) {
+            if (handle_directive_line(first_token, ptr, has_label, label_name, DC, head, data_image, err_loc) == FALSE) {
                 error_flag = TRUE;
             }
         } else {
-            if (handle_instruction_line(first_token, ptr, has_label, label_name, &IC, head, err_loc) == FALSE) {
+            if (handle_instruction_line(first_token, ptr, has_label, label_name, IC, head,instruction_image, err_loc) == FALSE) {
                 error_flag = TRUE;
             }
         }
@@ -127,13 +121,13 @@ int execute_first_pass(const char *filename, SymbolNode **head) {
 
     /* Update data symbol addresses by adding final IC */
     if (error_flag == FALSE) {
-        update_data_symbols_address(*head, IC);
+        update_data_symbols_address(*head, *IC);
     }
 
     return (error_flag == FALSE);
 }
 
-static int handle_directive_line(char *token, char *line_ptr, int has_label, char *label_name, int *DC, SymbolNode **head, location err_loc) {
+static int handle_directive_line(char *token, char *line_ptr, int has_label, char *label_name, int *DC, SymbolNode **head, unsigned char data_image[], location err_loc) {
     int error_flag = FALSE;
 
     /* Data Storage Directives */
@@ -152,13 +146,13 @@ static int handle_directive_line(char *token, char *line_ptr, int has_label, cha
 
         /* Delegate to the specific processor to extract values and advance DC */
         if (strcmp(token, ".asciz") == STRING_MATCH) {
-            if (process_string_directive(line_ptr, DC, err_loc) == FALSE) error_flag = TRUE;
+            if (process_string_directive(line_ptr, DC, data_image, err_loc) == FALSE) error_flag = TRUE;
         } else if (strcmp(token, ".db") == STRING_MATCH) {
-            if (process_data_directive(line_ptr, DC, 1, err_loc) == FALSE) error_flag = TRUE;
+            if (process_data_directive(line_ptr, DC, 1, data_image, err_loc) == FALSE) error_flag = TRUE;
         } else if (strcmp(token, ".dh") == STRING_MATCH) {
-            if (process_data_directive(line_ptr, DC, 2, err_loc) == FALSE) error_flag = TRUE;
+            if (process_data_directive(line_ptr, DC, 2, data_image, err_loc) == FALSE) error_flag = TRUE;
         } else if (strcmp(token, ".dw") == STRING_MATCH) {
-            if (process_data_directive(line_ptr, DC, 4, err_loc) == FALSE) error_flag = TRUE;
+            if (process_data_directive(line_ptr, DC, 4, data_image, err_loc) == FALSE) error_flag = TRUE;
         }
     }
     /* Extern Directive */
@@ -181,7 +175,7 @@ static int handle_directive_line(char *token, char *line_ptr, int has_label, cha
     return (error_flag == FALSE);
 }
 
-static int handle_instruction_line(char *token, char *line_ptr, int has_label, char *label_name, int *IC, SymbolNode **head, location err_loc) {
+static int handle_instruction_line(char *token, char *line_ptr, int has_label, char *label_name, int *IC, SymbolNode **head, unsigned char instruction_image[], location err_loc) {
     InstructionDef inst;
     int error_flag = FALSE;
 
@@ -203,15 +197,17 @@ static int handle_instruction_line(char *token, char *line_ptr, int has_label, c
 
     /* Parse operands and build the partial machine code */
     if (inst.type == R_TYPE) {
-        if (parse_r_type_instruction(line_ptr, &inst, IC, err_loc) == FALSE) {
+        if (parse_r_type_instruction(line_ptr, &inst, IC, instruction_image, err_loc) == FALSE) {
             error_flag = TRUE;
         }
     } else if (inst.type == I_TYPE) {
-        if (parse_i_type_instruction(line_ptr, &inst, IC, err_loc) == FALSE) {
+        if (parse_i_type_instruction(line_ptr, &inst, IC, instruction_image, err_loc) == FALSE) {
             error_flag = TRUE;
         }
     } else if (inst.type == J_TYPE) {
-        /* TO DO: parse_j_type_instruction() */
+        if (parse_j_type_instruction(line_ptr, &inst, IC, instruction_image, err_loc) == FALSE) {
+            error_flag = TRUE;
+        }
     } else {
         return FALSE; /* Unknown type safeguard */
     }
@@ -222,7 +218,7 @@ static int handle_instruction_line(char *token, char *line_ptr, int has_label, c
     return (error_flag == FALSE);
 }
 
-static int process_string_directive(char *line_ptr, int *DC, location err_loc) {
+static int process_string_directive(char *line_ptr, int *DC, unsigned char data_image[], location err_loc) {
     int error_flag = FALSE;
 
     skip_whitespace(&line_ptr);
@@ -264,7 +260,7 @@ static int process_string_directive(char *line_ptr, int *DC, location err_loc) {
     return (error_flag == FALSE);
 }
 
-static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, location err_loc) {
+static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, unsigned char data_image[], location err_loc) {
     long value;
     char *end_ptr;
     int i;
@@ -368,7 +364,7 @@ static int process_extern_directive(char *line_ptr, SymbolNode **head, location 
     return (error_flag == FALSE);
 }
 
-static int parse_r_type_instruction(char *line_ptr, InstructionDef *inst, int *IC, location err_loc) {
+static int parse_r_type_instruction(char *line_ptr, InstructionDef *inst, int *IC, unsigned char instruction_image[], location err_loc) {
     char operands[MAX_OPERANDS][MAX_LINE_LENGTH] = {{0}};
     int operand_count = 0;
     int expected_operands = (inst->opcode == 0) ? R_ARITHMETIC_OP_COUNT : R_COPY_OP_COUNT;
@@ -426,7 +422,7 @@ static int parse_r_type_instruction(char *line_ptr, InstructionDef *inst, int *I
     return TRUE;
 }
 
-static int parse_i_type_instruction(char *line_ptr, InstructionDef *inst, int *IC, location err_loc) {
+static int parse_i_type_instruction(char *line_ptr, InstructionDef *inst, int *IC, unsigned char instruction_image[], location err_loc) {
     char operands[MAX_OPERANDS][MAX_LINE_LENGTH] = {{0}};
     int operand_count = 0;
     int rs = 0, rt = 0;
@@ -481,6 +477,70 @@ static int parse_i_type_instruction(char *line_ptr, InstructionDef *inst, int *I
     machine_code |= ((long)rs << RS_SHIFT);
     machine_code |= ((long)rt << RT_SHIFT);
     machine_code |= (immed & IMMED_MASK); /* Mask prevents negative sign extension from bleeding over */
+
+    /* Store into little-endian memory */
+    for (i = 0; i < BYTES_PER_INSTRUCTION; i++) {
+        instruction_image[*IC + i] = (machine_code >> (i * BITS_PER_BYTE)) & BYTE_MASK;
+    }
+
+    return TRUE;
+}
+
+static int parse_j_type_instruction(char *line_ptr, InstructionDef *inst, int *IC, unsigned char instruction_image[], location err_loc) {
+    char operands[MAX_OPERANDS][MAX_LINE_LENGTH] = {{0}};
+    int operand_count = 0;
+    int expected_operands = (inst->opcode == STOP_OPCODE) ? J_TYPE_STOP_OP_COUNT : J_TYPE_OP_COUNT;
+    int reg_num = 0;
+    int reg_bit = 0;
+    long address = 0;
+    long machine_code;
+    int i;
+
+    /* Extract all comma-separated operands */
+    if (extract_operands(line_ptr, operands, &operand_count, err_loc) == FALSE) {
+        return FALSE;
+    }
+
+    /* Check exact operand counts */
+    if (operand_count < expected_operands) {
+        print_external_error(ERROR_CODE_31, err_loc); /* Missing arguments */
+        return FALSE;
+    }
+    if (operand_count > expected_operands) {
+        print_external_error(ERROR_CODE_32, err_loc); /* Extraneous text */
+        return FALSE;
+    }
+
+    /* Parse operand if the instruction expects one */
+    if (expected_operands == J_TYPE_OP_COUNT) {
+
+        /* Check if the operand is formatted as a valid register */
+        if (parse_register(operands[0], &reg_num) == TRUE) {
+
+            /* Only the 'jmp' instruction is allowed to jump to a register */
+            if (inst->opcode != JMP_OPCODE) {
+                print_external_error(ERROR_CODE_38, err_loc); /* Unrecognized operand type */
+                return FALSE;
+            }
+            reg_bit = 1;
+            address = reg_num;
+
+        } else {
+            /* If it's not a register, it must be a valid label */
+            if (is_valid_label(operands[0]) == FALSE) {
+                print_external_error(ERROR_CODE_52, err_loc); /* Illegal label name */
+                return FALSE;
+            }
+            reg_bit = 0;
+            address = 0; /* The distance to the label is calculated in the Second Pass */
+        }
+    }
+
+    /* 4. Build the 32-bit machine code */
+    machine_code = 0;
+    machine_code |= ((long)inst->opcode << OPCODE_SHIFT);
+    machine_code |= ((long)reg_bit << REG_BIT_SHIFT);
+    machine_code |= (address); /* Address simply takes up the remaining 25 bits */
 
     /* Store into little-endian memory */
     for (i = 0; i < BYTES_PER_INSTRUCTION; i++) {
