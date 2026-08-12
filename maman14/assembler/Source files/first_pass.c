@@ -39,6 +39,7 @@ int execute_first_pass(const char *file_name, SymbolNode **head, unsigned char i
         char first_token[MAX_LINE_LENGTH] = {0};
         int has_label = FALSE;
         char label_name[MAX_LABEL_LENGTH + 2] = {0}; /* +1 for potential ':', +1 for '\0' */
+        SymbolNode *existing_symbol = NULL;
 
         line_num++;
         err_loc.line_num = line_num;
@@ -85,6 +86,19 @@ int execute_first_pass(const char *file_name, SymbolNode **head, unsigned char i
             if (is_reserved_word(label_name) == TRUE) {
                 print_external_error(ERROR_CODE_52, err_loc);
                 error_flag = TRUE;
+            }
+
+            existing_symbol = find_symbol(*head, label_name);
+            if (existing_symbol != NULL) {
+                if (existing_symbol->is_extern == TRUE) {
+                    /* Cannot define a local label if it was already declared .extern */
+                    print_external_error(ERROR_CODE_55, err_loc);
+                    error_flag = TRUE;
+                } else {
+                    /* Standard duplicate local label error */
+                    print_external_error(ERROR_CODE_51, err_loc);
+                    error_flag = TRUE;
+                }
             }
 
             /* Since the first token was a label, grab the next token to find the operation */
@@ -335,6 +349,7 @@ static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, u
 static int process_extern_directive(char *line_ptr, SymbolNode **head, location err_loc) {
     char label_name[MAX_LINE_LENGTH] = {0};
     int error_flag = FALSE;
+    SymbolNode *existing_symbol = NULL;
 
     /* Get the operand (the external label name) */
     line_ptr = get_next_token(line_ptr, label_name);
@@ -354,6 +369,19 @@ static int process_extern_directive(char *line_ptr, SymbolNode **head, location 
     if (*line_ptr != '\0' && *line_ptr != '\n' && *line_ptr != COMMENT_CHAR) {
         print_external_error(ERROR_CODE_32, err_loc); /* Extraneous text */
         error_flag = TRUE;
+    }
+    if (error_flag == FALSE) {
+        existing_symbol = find_symbol(*head, label_name);
+        if (existing_symbol != NULL) {
+            if (existing_symbol->is_extern == FALSE) {
+                /* Exists locally, cannot be declared external */
+                print_external_error(ERROR_CODE_55, err_loc);
+                error_flag = TRUE;
+            } else {
+                /* It's already external. Duplicate externs are legal, just ignore. */
+                return TRUE;
+            }
+        }
     }
 
     /* Add to symbol table with value 0 if no errors */
