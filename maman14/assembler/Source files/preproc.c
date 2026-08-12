@@ -134,7 +134,7 @@ int expand_macros(const char *filename) {
             }
             /* Validate the exact characters used in the macro name */
             else if (is_valid_macro_name(token2) == FALSE) {
-                print_external_error(ERROR_CODE_14, current_loc);
+                print_external_error(ERROR_CODE_10, current_loc);
                 error_found = TRUE;
             }
             /* Valid macro found */
