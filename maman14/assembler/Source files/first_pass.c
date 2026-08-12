@@ -25,9 +25,9 @@ int execute_first_pass(const char *file_name, SymbolNode **head, unsigned char i
     int ch; /* Used for clearing the buffer if a line is too long */
 
     location err_loc;
-    err_loc.file_name = (char *)filename;
+    err_loc.file_name = (char *)file_name;
 
-    file = fopen(filename, "r");
+    file = fopen(file_name, "r");
     if (file == NULL) {
         print_internal_error(ERROR_CODE_2); /* Cannot open file */
         return FALSE;
@@ -110,7 +110,7 @@ int execute_first_pass(const char *file_name, SymbolNode **head, unsigned char i
         }
 
          /* Check for memory overflow */
-         if (IC + DC >= MAX_MEMORY) {
+         if (*IC + *DC >= MAX_MEMORY) {
              print_external_error(ERROR_CODE_56, err_loc);
              error_flag = TRUE;
              break;
