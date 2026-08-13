@@ -45,7 +45,7 @@ Error errors[] = {
         {ERROR_CODE_34, "Missing comma between operands"},
         {ERROR_CODE_35, "Illegal consecutive commas"},
         {ERROR_CODE_36, "Illegal comma placed before the first operand"},
-        {ERROR_CODE_37, "Operand is out of bounds for 16-bit 2's complement representation"},
+        {ERROR_CODE_37, "Operand is out of bounds"},
         {ERROR_CODE_38, "Unrecognized operand type for this specific instruction"},
         {ERROR_CODE_39, "Cannot branch or jump to a label that does not exist"},
         {-1,            ""},

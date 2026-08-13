@@ -131,6 +131,11 @@ int parse_register(const char *operand, int *reg_num) {
         return FALSE;
     }
 
+    /* This blocks '+', '-', spaces, or letters (e.g., $+1, $-5, $ A) */
+    if (!isdigit(operand[1])) {
+        return FALSE;
+    }
+
     /* If the first digit is '0' and there is another character after it, it's illegal */
     if (operand[1] == '0' && operand[2] != '\0') {
         return FALSE;

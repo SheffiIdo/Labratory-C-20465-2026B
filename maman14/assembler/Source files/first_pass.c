@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 
 /* Private helper function declarations */
 static int handle_directive_line(char *token, char *line_ptr, int has_label, char *label_name, int *DC, SymbolNode **head, unsigned char data_image[], location err_loc);
@@ -188,7 +189,11 @@ static int handle_directive_line(char *token, char *line_ptr, int has_label, cha
         if (strlen(entry_label) == 0) {
             print_external_error(ERROR_CODE_31, err_loc); /* Missing arguments */
             error_flag = TRUE;
-        } else {
+        } else if (is_valid_label(entry_label) == FALSE || is_reserved_word(entry_label) == TRUE) {
+            print_external_error(ERROR_CODE_52, err_loc); /* Illegal label name */
+            error_flag = TRUE;
+        }
+        else {
             /* Check for extraneous text after the label */
             skip_whitespace(&line_ptr);
             if (*line_ptr != '\0' && *line_ptr != '\n') {
@@ -313,9 +318,16 @@ static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, u
 
     /* Loop through the comma-separated list */
     while (*line_ptr != '\0' && *line_ptr != '\n') {
+        errno = 0;
 
         /* Parse the integer. strtol automatically handles negative signs and whitespace */
         value = strtol(line_ptr, &end_ptr, DECIMAL_BASE);
+
+        /* Check if strtol triggered the overflow alarm */
+        if (errno == ERANGE) {
+            print_external_error(ERROR_CODE_37, err_loc); /* Data out of bounds */
+            return FALSE;
+        }
 
         /* If the pointer didn't move, it didn't find a valid number */
         if (line_ptr == end_ptr) {
@@ -387,6 +399,11 @@ static int process_extern_directive(char *line_ptr, SymbolNode **head, location 
 
     if (is_valid_label(label_name) == FALSE) {
         print_external_error(ERROR_CODE_52, err_loc); /* Illegal label name */
+        error_flag = TRUE;
+    }
+
+    else if (is_reserved_word(label_name) == TRUE) {
+        print_external_error(ERROR_CODE_52, err_loc); /* Cannot use reserved word as label */
         error_flag = TRUE;
     }
 
@@ -582,7 +599,7 @@ static int parse_j_type_instruction(char *line_ptr, InstructionDef *inst, int *I
         } else {
             /* If it's not a register, it must be a valid label */
             if (is_valid_label(operands[0]) == FALSE) {
-                print_external_error(ERROR_CODE_52, err_loc); /* Illegal label name */
+                print_external_error(ERROR_CODE_38, err_loc); /* Unrecognized operand */
                 return FALSE;
             }
             reg_bit = 0;
