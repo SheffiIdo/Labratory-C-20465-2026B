@@ -62,7 +62,7 @@ Error errors[] = {
         /* 50 - 56: Data Directive & Label Errors */
         {ERROR_CODE_50, "Label declaration must end with ':'"},
         {ERROR_CODE_51, "Label is defined more than once in the source file"},
-        {ERROR_CODE_52, "Illegal label name (must start with letter, alphanumeric, max 31 chars and not reserved word)"},
+        {ERROR_CODE_52, "Illegal label name (must start with letter, alphanumeric, max 31 chars, contain only letters and numbers and not reserved word)"},
         {ERROR_CODE_53, "Data directive (.db, .dh, .dw) contains non-numeric values"},
         {ERROR_CODE_54, "Missing opening or closing quotes in .asciz directive"},
         {ERROR_CODE_55, "Label is declared as .extern but is defined locally in the file"},

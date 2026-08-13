@@ -131,6 +131,11 @@ int parse_register(const char *operand, int *reg_num) {
         return FALSE;
     }
 
+    /* If the first digit is '0' and there is another character after it, it's illegal */
+    if (operand[1] == '0' && operand[2] != '\0') {
+        return FALSE;
+    }
+
     /* Convert the rest of the string (after the '$') to a long integer */
     val = strtol(&operand[1], &end_ptr, DECIMAL_BASE);
 
@@ -174,7 +179,7 @@ int extract_operands(char *line_ptr, char operands[][MAX_LINE_LENGTH], int *oper
     skip_whitespace(&line_ptr);
 
     /* Empty operands are technically valid (e.g., a line with just "hlt") */
-    if (*line_ptr == '\0' || *line_ptr == '\n' || *line_ptr == COMMENT_CHAR) {
+    if (*line_ptr == '\0' || *line_ptr == '\n') {
         return TRUE;
     }
 
@@ -184,7 +189,7 @@ int extract_operands(char *line_ptr, char operands[][MAX_LINE_LENGTH], int *oper
         return FALSE;
     }
 
-    while (*line_ptr != '\0' && *line_ptr != '\n' && *line_ptr != COMMENT_CHAR) {
+    while (*line_ptr != '\0' && *line_ptr != '\n') {
 
         /* Protection against buffer overflow */
         if (*operand_count >= MAX_OPERANDS) {
@@ -199,7 +204,7 @@ int extract_operands(char *line_ptr, char operands[][MAX_LINE_LENGTH], int *oper
         skip_whitespace(&line_ptr);
 
         /* If we hit the end of the line safely, break out */
-        if (*line_ptr == '\0' || *line_ptr == '\n' || *line_ptr == COMMENT_CHAR) {
+        if (*line_ptr == '\0' || *line_ptr == '\n') {
             break;
         }
 
@@ -213,7 +218,7 @@ int extract_operands(char *line_ptr, char operands[][MAX_LINE_LENGTH], int *oper
         skip_whitespace(&line_ptr);
 
         /* Illegal trailing comma */
-        if (*line_ptr == '\0' || *line_ptr == '\n' || *line_ptr == COMMENT_CHAR) {
+        if (*line_ptr == '\0' || *line_ptr == '\n') {
             print_external_error(ERROR_CODE_32, err_loc); /* Extraneous text (trailing comma) */
             return FALSE;
         }

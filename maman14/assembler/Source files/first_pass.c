@@ -99,6 +99,7 @@ int execute_first_pass(const char *file_name, SymbolNode **head, unsigned char i
                     print_external_error(ERROR_CODE_51, err_loc);
                     error_flag = TRUE;
                 }
+                has_label = FALSE;
             }
 
             /* Since the first token was a label, grab the next token to find the operation */
@@ -178,7 +179,23 @@ static int handle_directive_line(char *token, char *line_ptr, int has_label, cha
     }
     /* Entry Directive */
     else if (strcmp(token, ".entry") == STRING_MATCH) {
-        /* .entry is handled entirely in the Second Pass, so we just skip it here */
+        /* .entry is handled entirely in the Second Pass, just check syntax */
+        char entry_label[MAX_LINE_LENGTH] = {0};
+
+        /* Grab the label name */
+        line_ptr = get_next_token(line_ptr, entry_label);
+
+        if (strlen(entry_label) == 0) {
+            print_external_error(ERROR_CODE_31, err_loc); /* Missing arguments */
+            error_flag = TRUE;
+        } else {
+            /* Check for extraneous text after the label */
+            skip_whitespace(&line_ptr);
+            if (*line_ptr != '\0' && *line_ptr != '\n') {
+                print_external_error(ERROR_CODE_32, err_loc); /* Extraneous text */
+                error_flag = TRUE;
+            }
+        }
     }
     else {
         /* Not a recognized directive */
@@ -266,7 +283,7 @@ static int process_string_directive(char *line_ptr, int *DC, unsigned char data_
 
     /* Check for garbage text after the closing quote */
     skip_whitespace(&line_ptr);
-    if (*line_ptr != '\0' && *line_ptr != '\n' && *line_ptr != COMMENT_CHAR) {
+    if (*line_ptr != '\0' && *line_ptr != '\n') {
         print_external_error(ERROR_CODE_32, err_loc); /* Extraneous text */
         error_flag = TRUE;
     }
@@ -277,12 +294,13 @@ static int process_string_directive(char *line_ptr, int *DC, unsigned char data_
 static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, unsigned char data_image[], location err_loc) {
     long value;
     char *end_ptr;
+    char *check_ptr;
     int i;
 
     skip_whitespace(&line_ptr);
 
     /* Missing arguments */
-    if (*line_ptr == '\0' || *line_ptr == '\n' || *line_ptr == COMMENT_CHAR) {
+    if (*line_ptr == '\0' || *line_ptr == '\n') {
         print_external_error(ERROR_CODE_31, err_loc);
         return FALSE;
     }
@@ -294,7 +312,7 @@ static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, u
     }
 
     /* Loop through the comma-separated list */
-    while (*line_ptr != '\0' && *line_ptr != '\n' && *line_ptr != COMMENT_CHAR) {
+    while (*line_ptr != '\0' && *line_ptr != '\n') {
 
         /* Parse the integer. strtol automatically handles negative signs and whitespace */
         value = strtol(line_ptr, &end_ptr, DECIMAL_BASE);
@@ -306,6 +324,14 @@ static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, u
             } else {
                 print_external_error(ERROR_CODE_53, err_loc); /* Non-numeric values */
             }
+            return FALSE;
+        }
+
+        /* Check what stopped strtol. If it isn't whitespace, a comma, or the end, it's garbage */
+        check_ptr = end_ptr;
+        skip_whitespace(&check_ptr);
+        if (*check_ptr != ',' && *check_ptr != '\0' && *check_ptr != '\n') {
+            print_external_error(ERROR_CODE_53, err_loc);
             return FALSE;
         }
 
@@ -322,7 +348,7 @@ static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, u
         skip_whitespace(&line_ptr);
 
         /* If we reached the end of the line safely, we are done */
-        if (*line_ptr == '\0' || *line_ptr == '\n' || *line_ptr == COMMENT_CHAR) {
+        if (*line_ptr == '\0' || *line_ptr == '\n') {
             break;
         }
 
@@ -337,7 +363,7 @@ static int process_data_directive(char *line_ptr, int *DC, int bytes_per_item, u
         skip_whitespace(&line_ptr);
 
         /* Rule: Illegal trailing comma at the end of the line[cite: 1] */
-        if (*line_ptr == '\0' || *line_ptr == '\n' || *line_ptr == COMMENT_CHAR) {
+        if (*line_ptr == '\0' || *line_ptr == '\n') {
             print_external_error(ERROR_CODE_32, err_loc); /* Extraneous text (trailing comma) */
             return FALSE;
         }
@@ -366,7 +392,7 @@ static int process_extern_directive(char *line_ptr, SymbolNode **head, location 
 
     /* Check for garbage after the label */
     skip_whitespace(&line_ptr);
-    if (*line_ptr != '\0' && *line_ptr != '\n' && *line_ptr != COMMENT_CHAR) {
+    if (*line_ptr != '\0' && *line_ptr != '\n') {
         print_external_error(ERROR_CODE_32, err_loc); /* Extraneous text */
         error_flag = TRUE;
     }
