@@ -28,15 +28,3 @@ add_executable(assembler
         "maman14/assembler/Source files/file_writer.c"
         "maman14/assembler/Header files/file_writer.h"
 )
-
-# --- Maman 14: First Pass & Second Pass Tester ---
-add_executable(test_first_pass
-        "maman14/assembler/Source files/test_driver.c"
-        "maman14/assembler/Source files/first_pass.c"
-        "maman14/assembler/Source files/second_pass.c"
-        "maman14/assembler/Source files/extern_usage.c"
-        "maman14/assembler/Source files/parser.c"
-        "maman14/assembler/Source files/symbol_table.c"
-        "maman14/assembler/Source files/errors.c"
-        "maman14/assembler/Source files/utils.c"
-)
