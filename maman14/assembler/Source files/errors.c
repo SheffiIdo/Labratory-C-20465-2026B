@@ -68,6 +68,7 @@ Error errors[] = {
         {ERROR_CODE_55, "Label is declared as .extern but is defined locally in the file"},
         {ERROR_CODE_56, "Memory overflow: Instruction and Data counters exceed maximum memory"},
         {ERROR_CODE_57, "Symbol defined as .entry was not found in the source file"},
+        {ERROR_CODE_58, "Label cannot be declared as both .entry and .extern in the same file"},
 };
 
 void print_internal_error(int error_code) {

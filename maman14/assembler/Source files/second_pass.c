@@ -104,6 +104,9 @@ static void process_entry_directive(char *line_ptr, SymbolNode *head, location e
     if (sym == NULL) {
         print_external_error(ERROR_CODE_57, err_loc); /* Entry symbol not found */
         *error_flag = TRUE;
+    }else if (sym->is_extern == TRUE) {
+        print_external_error(ERROR_CODE_58, err_loc); /* Cannot be both .entry and .extern */
+        *error_flag = TRUE;
     } else {
         sym->is_entry = TRUE;
     }
