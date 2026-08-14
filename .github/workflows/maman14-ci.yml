@@ -17,20 +17,70 @@ on:
       - '.github/workflows/maman14-ci.yml'
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-24.04
+
+    # Default working directory prevents needing to 'cd' in every step
+    defaults:
+      run:
+        working-directory: maman14/assembler
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc make git
+          sudo apt-get install -y gcc make git valgrind
 
       - name: Build Assembler
         run: |
           echo "=== Compiling Assembler ==="
-          make clean && make
+          make clean
+          make
           echo "=== Build Successful ==="
+
+      # Generate a fast test file on the fly
+      - name: Generate Test File
+        run: |
+          echo "=== Creating test file ==="
+          mkdir -p tests
+          cat << 'EOF' > tests/ci_test.as
+          .entry Start
+          .extern ExtVar
+          Start: add $1, $2, $3
+                 jmp ExtVar
+          EOF
+
+      # Execute the program and verify output generation
+      - name: Run Assembler Test
+        run: |
+          echo "=== Running Assembler on ci_test ==="
+          ./assembler tests/ci_test
+          
+          # Verify the expected files were successfully created
+          if [ -f "tests/ci_test.am" ] && [ -f "tests/ci_test.ob" ] && [ -f "tests/ci_test.ext" ] && [ -f "tests/ci_test.ent" ]; then
+            echo "All output files generated successfully!"
+          else
+            echo "Error: Missing expected output files."
+            exit 1
+          fi
+
+      # Valgrind memory leak detection
+      - name: Run Memory Leak Check (Valgrind)
+        run: |
+          echo "=== Running Valgrind ==="
+          # --error-exitcode=1 forces the CI to fail if any memory is leaked
+          valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./assembler tests/ci_test
+          echo "=== Memory Check Passed ==="
+
+      # Save the artifacts so you can inspect them later
+      - name: Upload Build Artifacts
+        if: always() # Uploads even if a previous step failed
+        uses: actions/upload-artifact@v4
+        with:
+          name: assembler-artifacts
+          path: |
+            maman14/assembler/assembler
+            maman14/assembler/tests/*

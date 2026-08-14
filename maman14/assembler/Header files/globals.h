@@ -52,6 +52,7 @@
 #define MAX_LABEL_LENGTH 31      /* Max chars for a valid label/symbol name */
 #define IC_INIT_VALUE 100        /* Instruction Counter starting address */
 #define DC_INIT_VALUE 0          /* Data Counter starting address */
+#define MINIMUM_ARGS 2
 
 /*
  * Expected operand counts for instructions
