@@ -23,6 +23,10 @@
 #define BYTES_PER_INSTRUCTION 4
 #define DECIMAL_BASE 10
 #define MAX_MEMORY 4096          /* Maximum memory size of the imaginary machine */
+#define BYTE_OFFSET_0 0          /* Machine code byte placement */
+#define BYTE_OFFSET_1 1
+#define BYTE_OFFSET_2 2
+#define BYTE_OFFSET_3 3
 
 /*
  * Instruction binary shift constants
@@ -37,6 +41,8 @@
  * parsing boundaries
  */
 #define MAX_OPERANDS 40
+#define BRANCH_LABEL_OP_INDEX 2
+#define JUMP_LABEL_OP_INDEX 0
 
 /*
  * assembler system constraints
@@ -62,6 +68,7 @@
 #define REG_BIT_SHIFT 25
 #define JMP_OPCODE 30
 #define STOP_OPCODE 63
+#define J_ADDRESS_BIT_24_MASK 0x01 /* Mask to isolate the 25th bit for J-Type addresses */
 
 /*
  * Instruction opcode boundaries

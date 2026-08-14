@@ -48,7 +48,7 @@ Error errors[] = {
         {ERROR_CODE_37, "Operand is out of bounds"},
         {ERROR_CODE_38, "Unrecognized operand type for this specific instruction"},
         {ERROR_CODE_39, "Cannot branch or jump to a label that does not exist"},
-        {-1,            ""},
+        {ERROR_CODE_40, "Branch instructions cannot jump to external labels"},
         {-1,            ""},
         {-1,            ""},
         {-1,            ""},
@@ -67,6 +67,7 @@ Error errors[] = {
         {ERROR_CODE_54, "Missing opening or closing quotes in .asciz directive"},
         {ERROR_CODE_55, "Label is declared as .extern but is defined locally in the file"},
         {ERROR_CODE_56, "Memory overflow: Instruction and Data counters exceed maximum memory"},
+        {ERROR_CODE_57, "Symbol defined as .entry was not found in the source file"},
 };
 
 void print_internal_error(int error_code) {

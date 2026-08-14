@@ -46,6 +46,7 @@ typedef enum ERROR_CODES {
     ERROR_CODE_37,
     ERROR_CODE_38,
     ERROR_CODE_39,
+    ERROR_CODE_40,
 
     /*
      * DATA DIRECTIVE & LABEL ERRORS
@@ -56,7 +57,8 @@ typedef enum ERROR_CODES {
     ERROR_CODE_53,
     ERROR_CODE_54,
     ERROR_CODE_55,
-    ERROR_CODE_56
+    ERROR_CODE_56,
+    ERROR_CODE_57
 } ERROR_CODES;
 
 
