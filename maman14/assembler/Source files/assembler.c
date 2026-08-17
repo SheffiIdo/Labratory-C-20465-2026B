@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
         strcat(am_file, AM_EXTENSION);
 
         /* PRE-PROCESSOR */
-        printf(" Running Pre-Processor...\n");
+        printf("Running Pre-Processor...\n");
         if (expand_macros(as_file) == FALSE) {
             printf("Skipping %s due to pre-processor errors.\n", argv[i]);
             continue; /* Move to the next file */

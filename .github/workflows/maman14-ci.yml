@@ -41,39 +41,81 @@ jobs:
           make
           echo "=== Build Successful ==="
 
-      # Generate a fast test file on the fly
-      - name: Generate Test File
+      - name: Test Valid Inputs (Positive Control)
         run: |
-          echo "=== Creating test file ==="
-          mkdir -p tests
-          cat << 'EOF' > tests/ci_test.as
-          .entry Start
-          .extern ExtVar
-          Start: add $1, $2, $3
-                 jmp ExtVar
-          EOF
-
-      # Execute the program and verify output generation
-      - name: Run Assembler Test
-        run: |
-          echo "=== Running Assembler on ci_test ==="
-          ./assembler tests/ci_test
+          echo "=== Testing Valid Files ==="
           
-          # Verify the expected files were successfully created
-          if [ -f "tests/ci_test.am" ] && [ -f "tests/ci_test.ob" ] && [ -f "tests/ci_test.ext" ] && [ -f "tests/ci_test.ent" ]; then
-            echo "All output files generated successfully!"
-          else
-            echo "Error: Missing expected output files."
-            exit 1
+        # List all the valid files we expect to compile perfectly
+          valid_files=(
+            "Inputs/valid_input_1"
+            "Inputs/valid_input_2"
+            "Inputs/valid_input_3"
+            "Inputs/valid_input_4"
+            "Inputs/booklet_example"
+            "Inputs/booklet_example_2"
+          )
+          
+          for base in "${valid_files[@]}"; do
+            echo "----------------------------------------"
+            echo "Executing: ./assembler $base"
+          
+            # Valgrind crashes the CI if there is a leak OR if the program fails
+            valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./assembler "$base"
+          
+            # Verify that all 4 expected output files were successfully created
+            for ext in am ob ext ent; do
+              if [ ! -f "${base}.${ext}" ]; then
+                echo "Error: ${base}.${ext} was not generated!"
+                exit 1
+              fi
+            done
+            echo "[V] Success: $base generated all outputs cleanly."
+          done
+
+      - name: Test Invalid Inputs (Negative Control)
+        run: |
+          echo "=== Testing Invalid Files ==="
+          shopt -s nullglob
+          invalid_files=(Inputs/invalid_input_*.as)
+          
+          if [ ${#invalid_files[@]} -eq 0 ]; then
+            echo "No invalid files found in Inputs directory. Skipping."
+            exit 0
           fi
 
-      # Valgrind memory leak detection
-      - name: Run Memory Leak Check (Valgrind)
-        run: |
-          echo "=== Running Valgrind ==="
-          # --error-exitcode=1 forces the CI to fail if any memory is leaked
-          valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./assembler tests/ci_test
-          echo "=== Memory Check Passed ==="
+          for file in "${invalid_files[@]}"; do
+        # Strip the .as extension for a cleaner command
+            base="${file%.as}"
+            echo "----------------------------------------"
+            echo "Testing Error Handling: ./assembler $base"
+          
+            # Temporarily disable GitHub's automatic crash-on-error behavior
+            set +e 
+          
+            # Run Valgrind. If there is a LEAK, it returns 42. 
+            # If there is a syntax error, it returns your normal C exit code.
+            valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=42 ./assembler "$base"
+          
+            # Capture the exact exit code Valgrind just returned
+            exit_code=$? 
+          
+            # Re-enable GitHub's crash-on-error behavior
+            set -e 
+          
+            # If the code is 42, we have a memory leak! Fail the CI.
+            if [ $exit_code -eq 42 ]; then
+              echo "Error: Memory leak detected in $base!"
+              exit 1
+            fi
+          
+            # Verify the .ob file was strictly NOT created
+            if [ -f "${base}.ob" ]; then
+              echo "Error: ${base}.ob was generated for an invalid file! It should have aborted."
+              exit 1
+            fi
+          
+            echo "[V] Success: $base rejected correctly with no leaks and no object file."
+          done
 
       # Save the artifacts so you can inspect them later
       - name: Upload Build Artifacts
@@ -82,5 +124,5 @@ jobs:
         with:
           name: assembler-artifacts
           path: |
-            maman14/assembler/assembler
-            maman14/assembler/tests/*
+            maman14/assembler/Inputs/*
+            maman14/assembler/Outputs/*
