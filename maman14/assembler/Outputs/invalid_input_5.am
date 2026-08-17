@@ -1,0 +1,11 @@
+.extern ConflictLbl
+.entry ConflictLbl
+.entry MissingEntry
+Main: add $3, $5, $9
+      move $2, $4
+      bne $31, $0, FakeLoop
+      la DataBlock
+      jmp NowhereLabel
+    bgt $1, $2, ConflictLbl
+      hlt
+DataBlock: .db 10, 20, 30

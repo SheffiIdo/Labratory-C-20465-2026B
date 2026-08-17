@@ -1,0 +1,12 @@
+.entry FinalData
+.extern ExtFunc
+StartLbl:   la    FinalData
+            call  ExtFunc
+        add   $31,  $0,   $15
+        sub   $15,  $15,  $15
+            jmp   EndCode
+EndCode:    hlt
+FinalData:  .dw   2147483647, -2147483648
+            .dh   32767, -32768
+            .db   127, -128
+            .asciz "  Spaces! "

@@ -1,0 +1,13 @@
+.extern ExternFirstLbl
+.extern RealExtern
+StartCode: ValidMacro
+ExternFirstLbl: move $1, $2
+LocalFirstLbl:  la RealExtern
+.extern LocalFirstLbl
+             bne $4, $5, RealExtern
+             badopcode $1, $2
+             move $35, $2
+             add $1,, $2, $3
+             la 15
+DataOne:     .dh 10, X, 30
+DataTwo:     .asciz "No closing quote

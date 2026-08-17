@@ -1,0 +1,21 @@
+.extern ExtFuncA
+.extern ExtFuncB
+.entry FinalVal
+.entry CodeLabel
+StartCode:  la DataTwo
+            la DataOne
+            call ExtFuncA
+            move $1, $2
+            addi $2, 10, $3
+DataOne:    .db 1, 2, 3, 4
+            .dh 12, 14
+CodeLabel:  call ExtFuncB
+            bne $2, $3, CodeLabel
+            jmp $5
+            sub $6, $7, $8
+            and $8, $9, $10
+            ori $10, 5, $11
+            bgt $11, $0, StartCode
+            hlt
+DataTwo:    .asciz "Fragmented"
+FinalVal:   .dw -1, 100, 200

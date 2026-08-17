@@ -1,0 +1,12 @@
+.entry MainStart
+.entry DataBlock
+.extern ExternalFunc
+    add $1, $2, $3
+    move $3, $4
+MainStart: la DataBlock
+           bne $31, $0, LoopJump
+           call ExternalFunc
+LoopJump:  jmp $14
+           hlt
+DataBlock: .db 127, -128, 0
+           .db 42, 10

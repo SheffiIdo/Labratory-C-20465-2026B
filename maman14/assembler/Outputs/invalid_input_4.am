@@ -1,0 +1,16 @@
+.extern EXTLBL
+.entry MISSINGENTRY
+BADLABEL add $1, $2, $3
+add: move $1, $2
+DUP: add $1, $2, $3
+DUP: sub $4, $5, $6
+EXTLBL: hlt
+    add $1, $2
+    sub $1, $2, $3 extra_text
+    move $32, $1
+    add $1 $2, $3
+    add $1, , $2, $3
+    add ,$1, $2, $3
+    bne 5, $2, DUP
+    .db 12, abc, 14
+    .asciz "missing_quote

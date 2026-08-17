@@ -1,0 +1,6 @@
+BAD_LABEL: add $1, $2, $3
+1BadLabel: move $2, $3
+StartLbl: add $1, $2, $3
+StartLbl: move $2, $3
+    add $1 $2, $3
+    bne $1, $2, MissingLbl
