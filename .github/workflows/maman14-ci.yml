@@ -20,7 +20,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-24.04
 
-    # Default working directory prevents needing to 'cd' in every step
     defaults:
       run:
         working-directory: maman14/assembler
@@ -45,7 +44,7 @@ jobs:
         run: |
           echo "=== Testing Valid Files ==="
           
-        # List all the valid files we expect to compile perfectly
+          # List all the valid files we expect to compile perfectly
           valid_files=(
             "Inputs/valid_input_1"
             "Inputs/valid_input_2"
@@ -84,7 +83,7 @@ jobs:
           fi
 
           for file in "${invalid_files[@]}"; do
-        # Strip the .as extension for a cleaner command
+            # Strip the .as extension for a cleaner command
             base="${file%.as}"
             echo "----------------------------------------"
             echo "Testing Error Handling: ./assembler $base"
@@ -117,9 +116,8 @@ jobs:
             echo "[V] Success: $base rejected correctly with no leaks and no object file."
           done
 
-      # Save the artifacts so you can inspect them later
       - name: Upload Build Artifacts
-        if: always() # Uploads even if a previous step failed
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: assembler-artifacts
