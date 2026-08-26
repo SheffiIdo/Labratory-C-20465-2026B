@@ -39,95 +39,95 @@ The assembler processes each `.as` source file through four distinct, isolated s
 
 ```text
 maman14
-└── assembler
-    ├── Header files
-    │   ├── errors.h
-    │   ├── extern_usage.h
-    │   ├── file_writer.h
-    │   ├── first_pass.h
-    │   ├── globals.h
-    │   ├── macro_table.h
-    │   ├── parser.h
-    │   ├── preproc.h
-    │   ├── second_pass.h
-    │   ├── symbol_table.h
-    │   └── utils.h
-    ├── Inputs
-    │   ├── booklet_example.as
-    │   ├── booklet_example_2.as
-    │   ├── invalid_input_1.as
-    │   ├── invalid_input_2.as
-    │   ├── invalid_input_3.as
-    │   ├── invalid_input_4.as
-    │   ├── invalid_input_5.as
-    │   ├── invalid_input_6.as
-    │   ├── valid_input_1.as
-    │   ├── valid_input_2.as
-    │   ├── valid_input_3.as
-    │   └── valid_input_4.as
-    ├── Outputs
-    │   ├── Screenshots
-    │   │   ├── Invalid_input_1.png
-    │   │   ├── Invalid_input_2.png
-    │   │   ├── invalid_input_3.png
-    │   │   ├── invalid_input_4.png
-    │   │   ├── invalid_input_5.png
-    │   │   ├── invalid_input_6.png
-    │   │   └── valid_input_1-4.png
-    │   ├── booklet_example.am
-    │   ├── booklet_example.ent
-    │   ├── booklet_example.ext
-    │   ├── booklet_example.ob
-    │   ├── booklet_example_2.am
-    │   ├── booklet_example_2.ent
-    │   ├── booklet_example_2.ext
-    │   ├── booklet_example_2.ob
-    │   ├── invalid_input_2.am
-    │   ├── invalid_input_4.am
-    │   ├── invalid_input_5.am
-    │   ├── invalid_input_6.am
-    │   ├── valid_input_1.am
-    │   ├── valid_input_1.ent
-    │   ├── valid_input_1.ext
-    │   ├── valid_input_1.ob
-    │   ├── valid_input_2.am
-    │   ├── valid_input_2.ent
-    │   ├── valid_input_2.ext
-    │   ├── valid_input_2.ob
-    │   ├── valid_input_3.am
-    │   ├── valid_input_3.ent
-    │   ├── valid_input_3.ext
-    │   ├── valid_input_3.ob
-    │   ├── valid_input_4.am
-    │   ├── valid_input_4.ent
-    │   ├── valid_input_4.ext
-    │   └── valid_input_4.ob
-    ├── Source files
-    │   ├── assembler.c
-    │   ├── errors.c
-    │   ├── extern_usage.c
-    │   ├── file_writer.c
-    │   ├── first_pass.c
-    │   ├── macro_table.c
-    │   ├── parser.c
-    │   ├── preproc.c
-    │   ├── second_pass.c
-    │   ├── symbol_table.c
-    │   └── utils.c
-    ├── assembler
-    ├── assembler.o
-    ├── errors.o
-    ├── extern_usage.o
-    ├── file_writer.o
-    ├── first_pass.o
-    ├── macro_table.o
-    ├── Makefile
-    ├── parser.o
-    ├── preproc.o
-    ├── README.md
-    ├── second_pass.o
-    ├── symbol_table.o
-    └── utils.o
+├── assembler
+│   ├── Header files
+│   │   ├── errors.h
+│   │   ├── extern_usage.h
+│   │   ├── file_writer.h
+│   │   ├── first_pass.h
+│   │   ├── globals.h
+│   │   ├── macro_table.h
+│   │   ├── parser.h
+│   │   ├── preproc.h
+│   │   ├── second_pass.h
+│   │   ├── symbol_table.h
+│   │   └── utils.h
+│   ├── Inputs
+│   │   ├── booklet_example.as
+│   │   ├── booklet_example_2.as
+│   │   ├── invalid_input_1.as
+│   │   ├── invalid_input_2.as
+│   │   ├── invalid_input_3.as
+│   │   ├── invalid_input_4.as
+│   │   ├── invalid_input_5.as
+│   │   ├── invalid_input_6.as
+│   │   ├── valid_input_1.as
+│   │   ├── valid_input_2.as
+│   │   ├── valid_input_3.as
+│   │   └── valid_input_4.as
+│   ├── Outputs
+│   │   ├── Screenshots
+│   │   │   ├── Invalid_input_1.png
+│   │   │   ├── Invalid_input_2.png
+│   │   │   ├── invalid_input_3.png
+│   │   │   ├── invalid_input_4.png
+│   │   │   ├── invalid_input_5.png
+│   │   │   ├── invalid_input_6.png
+│   │   │   └── valid_input_1-4.png
+│   │   ├── booklet_example.am
+│   │   ├── booklet_example.ent
+│   │   ├── booklet_example.ext
+│   │   ├── booklet_example.ob
+│   │   ├── booklet_example_2.am
+│   │   ├── booklet_example_2.ent
+│   │   ├── booklet_example_2.ext
+│   │   ├── booklet_example_2.ob
+│   │   ├── invalid_input_2.am
+│   │   ├── invalid_input_4.am
+│   │   ├── invalid_input_5.am
+│   │   ├── invalid_input_6.am
+│   │   ├── valid_input_1.am
+│   │   ├── valid_input_1.ent
+│   │   ├── valid_input_1.ext
+│   │   ├── valid_input_1.ob
+│   │   ├── valid_input_2.am
+│   │   ├── valid_input_2.ent
+│   │   ├── valid_input_2.ext
+│   │   ├── valid_input_2.ob
+│   │   ├── valid_input_3.am
+│   │   ├── valid_input_3.ent
+│   │   ├── valid_input_3.ext
+│   │   ├── valid_input_3.ob
+│   │   ├── valid_input_4.am
+│   │   ├── valid_input_4.ent
+│   │   ├── valid_input_4.ext
+│   │   └── valid_input_4.ob
+│   ├── Source files
+│   │   ├── assembler.c
+│   │   ├── errors.c
+│   │   ├── extern_usage.c
+│   │   ├── file_writer.c
+│   │   ├── first_pass.c
+│   │   ├── macro_table.c
+│   │   ├── parser.c
+│   │   ├── preproc.c
+│   │   ├── second_pass.c
+│   │   ├── symbol_table.c
+│   │   └── utils.c
+│   ├── assembler
+│   ├── assembler.o
+│   ├── errors.o
+│   ├── extern_usage.o
+│   ├── file_writer.o
+│   ├── first_pass.o
+│   ├── macro_table.o
+│   ├── Makefile
+│   ├── parser.o
+│   ├── preproc.o
+│   ├── second_pass.o
+│   ├── symbol_table.o
+│   └── utils.o
+└── README.md
 ```
 
 ---
@@ -167,7 +167,7 @@ Every component of this project is thoroughly documented to ensure readability a
 
 ## 🧪 Testing & CI/CD
 
-This project is bundled with a comprehensive test suite (located in the `Inputs/` directory) and runs on an automated **GitHub Actions CI Pipeline**.
+This project is bundled with a comprehensive test suite (located in the `assembler/Inputs` directory) and runs on an automated **GitHub Actions CI Pipeline**.
 
 * **Positive Control Tests:** `valid_input_X.as` files are tested to ensure successful compilation, accurate mathematical offset calculations, and exact file generation.
 * **Negative Control Tests:** `invalid_input_X.as` files are purposefully injected with syntax errors, illegal operands, and macro placement violations. The CI ensures the assembler catches the errors, prints the correct `err_code`, prevents the creation of `.ob` files, and exits gracefully.
