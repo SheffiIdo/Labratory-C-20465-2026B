@@ -134,4 +134,7 @@ typedef struct {
  int funct;              /* Used for R-Type, 0 for others */
 } InstructionDef;
 
+/* Global variables (up to 9)*/
+extern int memory_allocation_fail;
+
 #endif

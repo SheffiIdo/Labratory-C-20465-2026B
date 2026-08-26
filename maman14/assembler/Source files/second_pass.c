@@ -3,6 +3,8 @@
 #include "../Header files/utils.h"
 #include "../Header files/errors.h"
 #include "../Header files/globals.h"
+#include "../Header files/symbol_table.h"
+#include "../Header files/extern_usage.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -82,6 +84,12 @@ int execute_second_pass(const char *file_name, SymbolNode *head, ExternUsageNode
 
             (*IC) += BYTES_PER_INSTRUCTION;
         }
+        /* Free and exit if allocation fails */
+        if (memory_allocation_fail == TRUE) {
+            fclose(file);                  /* Prevent file leak */
+            free_symbol_table(head);       /* Prevent Symbol leak */
+            free_extern_usage(*ext_head);  /* Prevent Extern leak */
+            print_internal_error(ERROR_CODE_1); /* Exits safely */
     }
 
     fclose(file);

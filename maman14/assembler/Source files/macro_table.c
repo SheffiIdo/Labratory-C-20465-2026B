@@ -2,7 +2,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "../Header files/macro_table.h"
-#include "../Header files/errors.h"
 #include "../Header files/globals.h"
 
 MacroNode *find_macro(MacroNode *head, const char *name) {
@@ -34,7 +33,8 @@ void add_macro(MacroNode **head, const char *name, const char *line_text) {
         /* Reallocate memory to fit existing text and new text */
         new_body = realloc(existing->body, old_len + line_len + NULL_CHAR_LEN);
         if (new_body == NULL) {
-            print_internal_error(ERROR_CODE_1);
+            memory_allocation_fail = TRUE;
+            return;
         }
 
         existing->body = new_body;
@@ -44,7 +44,8 @@ void add_macro(MacroNode **head, const char *name, const char *line_text) {
         /* Case 2: new macro - create node */
         new_node = malloc(sizeof(MacroNode));
         if (new_node == NULL) {
-            print_internal_error(ERROR_CODE_1);
+            memory_allocation_fail = TRUE;
+            return;
         }
 
         /* Allocate exact memory for strings plus the null terminator */
@@ -52,7 +53,15 @@ void add_macro(MacroNode **head, const char *name, const char *line_text) {
         new_node->body = malloc(strlen(line_text) + NULL_CHAR_LEN);
 
         if (new_node->name == NULL || new_node->body == NULL) {
-            print_internal_error(ERROR_CODE_1);
+            if (new_node->name != NULL) {
+                free(new_node->name);
+            }
+            if (new_node->body != NULL) {
+                free(new_node->body);
+            }
+            free(new_node);
+            memory_allocation_fail = TRUE;
+            return;
         }
 
         strcpy(new_node->name, name);
@@ -72,7 +81,6 @@ void free_macro_table(MacroNode *head) {
     while (current != NULL) {
         temp = current;
         current = current->next;
-
         free(temp->name);
         free(temp->body);
         free(temp);

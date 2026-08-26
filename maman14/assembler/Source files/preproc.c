@@ -28,8 +28,6 @@ int expand_macros(const char *filename) {
     int scanned_items = 0;
     size_t name_len;
     size_t ext_len;
-
-
     location current_loc;
 
     /* Calculate the file name and replace ".as" with ".am" */
@@ -142,6 +140,15 @@ int expand_macros(const char *filename) {
                 is_inside_macro = TRUE;
                 strcpy(current_mcro_name, token2);
                 add_macro(&macro_table, current_mcro_name, "");
+                /* Free and exit if allocation fails */
+                if (memory_allocation_fail == TRUE) {
+                    fclose(in_fp);
+                    fclose(out_fp);
+                    free_macro_table(macro_table);
+                    remove(output_name);
+                    free(output_name);
+                    print_internal_error(ERROR_CODE_1);
+                }
             }
             continue;
         }
@@ -171,6 +178,15 @@ int expand_macros(const char *filename) {
          */
         if (is_inside_macro == TRUE) {
             add_macro(&macro_table, current_mcro_name, line);
+            /* Free and exit if allocation fails */
+            if (memory_allocation_fail == TRUE) {
+                fclose(in_fp);
+                fclose(out_fp);
+                free_macro_table(macro_table);
+                remove(output_name);
+                free(output_name);
+                print_internal_error(ERROR_CODE_1);
+            }
         }
         else {
             char first_word[LINE_BUFFER_SIZE] = "";

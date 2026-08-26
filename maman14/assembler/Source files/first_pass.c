@@ -125,6 +125,12 @@ int execute_first_pass(const char *file_name, SymbolNode **head, unsigned char i
             }
         }
 
+        if (memory_allocation_fail == TRUE) {
+            fclose(file);                  /* Prevent file leak */
+            free_symbol_table(*head);      /* Prevent node leak */
+            print_internal_error(ERROR_CODE_1); /* Exits safely */
+        }
+
          /* Check for memory overflow */
          if (*IC + *DC >= MAX_MEMORY) {
              print_external_error(ERROR_CODE_56, err_loc);

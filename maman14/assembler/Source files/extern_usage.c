@@ -1,5 +1,6 @@
 #include "../Header files/extern_usage.h"
 #include "../Header files/errors.h"
+#include "../Header files/globals.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -10,7 +11,7 @@ void add_extern_usage(ExternUsageNode **head, const char *name, int address) {
     /* Allocate memory for the new node */
     new_node = (ExternUsageNode *)malloc(sizeof(ExternUsageNode));
     if (new_node == NULL) {
-        print_internal_error(ERROR_CODE_1); /* Failed to allocate memory */
+        memory_allocation_fail = TRUE; /* Failed to allocate memory */
         return;
     }
 

@@ -10,6 +10,8 @@
 #include "../Header files/symbol_table.h"
 #include "../Header files/extern_usage.h"
 
+int memory_allocation_fail = FALSE;
+
 int main(int argc, char *argv[]) {
     int i;
     char as_file[MAX_LINE_LENGTH];

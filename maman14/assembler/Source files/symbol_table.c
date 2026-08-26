@@ -24,7 +24,8 @@ void add_symbol(SymbolNode **head, const char *name, int address, SymbolAttribut
     /* Allocate memory and handle potential allocation failure */
     new_node = (SymbolNode *)malloc(sizeof(SymbolNode));
     if (new_node == NULL) {
-        print_internal_error(ERROR_CODE_1);
+        memory_allocation_fail = TRUE;
+        return;
     }
 
     /* Initialize the basic data of the new symbol node */

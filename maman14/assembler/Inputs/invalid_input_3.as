@@ -13,7 +13,7 @@ mcro BAD_TEXT extra_stuff
     sub $4, $5, $6
 mcroend extra_stuff
 
-; Error 13 & 4: Name too long and line too long
+; Error 13 : Name too long
 mcro THIS_MACRO_NAME_IS_WAY_TOO_LONG_AND_EXCEEDS_THE_THIRTY_ONE_CHAR_LIMIT
     move $1, $2
 mcroend
