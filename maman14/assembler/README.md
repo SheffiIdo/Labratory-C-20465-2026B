@@ -4,7 +4,7 @@ This project is a custom two-pass assembler written in standard C90 (ANSI C). It
 
 The assembler translates a custom 32-bit assembly language into machine code, featuring a fully functional macro pre-processor, a dual-pass translation engine, and strict error validation. It is designed with a heavy emphasis on dynamic memory safety, modular architecture, and strict compiler compliance.
 
-**Author:** עידו שפי  
+**Author:** Ido Sheffi  
 **Environment:** Ubuntu 24.04 / GCC
 
 ---
