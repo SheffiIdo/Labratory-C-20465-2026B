@@ -1,3 +1,8 @@
+/*
+ * Handles the final stage of the compilation process. It translates the internal
+ * memory images and tables into the correctly formatted .ob, .ent, and .ext text files.
+ */
+
 #include "../Header files/file_writer.h"
 #include "../Header files/errors.h"
 #include <stdio.h>

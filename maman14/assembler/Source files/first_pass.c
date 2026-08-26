@@ -1,3 +1,9 @@
+/*
+ * Scans the macro-expanded code to build the symbol table, calculate exact
+ * memory addresses (IC and DC counters), and partially encode recognized
+ * instructions and data directives.
+ */
+
 #include "../Header files/first_pass.h"
 #include "../Header files/parser.h"
 #include "../Header files/utils.h"

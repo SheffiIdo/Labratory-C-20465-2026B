@@ -1,3 +1,9 @@
+/*
+ * Implements the data structure for storing macro definitions. It handles the
+ * safe dynamic allocation, appending, and freeing of macro names and their
+ * textual bodies during pre-processing.
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>

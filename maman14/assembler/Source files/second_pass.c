@@ -1,3 +1,9 @@
+/*
+ * Completes the encoding process by resolving label addresses that were unknown
+ * during the first pass. It finalizes the 32-bit machine code for branch
+ * distances and absolute jump locations.
+ */
+
 #include "../Header files/second_pass.h"
 #include "../Header files/parser.h"
 #include "../Header files/utils.h"

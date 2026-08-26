@@ -1,7 +1,12 @@
+/*
+ * Manages a dynamic linked list that tracks all user-defined labels. It records
+ * each label's calculated memory address alongside its specific attributes
+ * (code, data, entry, or extern).
+ */
+
 #include <string.h>
 #include <stdlib.h>
 #include "../Header files/symbol_table.h"
-#include "../Header files/errors.h"
 
 SymbolNode *find_symbol(SymbolNode *head, const char *name) {
     SymbolNode *current = head;

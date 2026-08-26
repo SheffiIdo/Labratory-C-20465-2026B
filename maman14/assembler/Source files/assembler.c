@@ -1,7 +1,15 @@
+/*
+ * Ido Sheffi
+ * ID: 208138974
+ *
+ * The main entry point of the application. It handles command-line arguments and
+ * orchestrates the entire compilation pipeline for each provided file, cleanly
+ * isolating memory between runs.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "../Header files/globals.h"
 #include "../Header files/preproc.h"
 #include "../Header files/first_pass.h"

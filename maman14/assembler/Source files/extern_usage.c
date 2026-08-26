@@ -1,5 +1,10 @@
+/*
+ * Manages a dynamic linked list that records every specific memory address where
+ * an external (.extern) symbol is called. This data is exclusively used to
+ * generate the final .ext output file.
+ */
+
 #include "../Header files/extern_usage.h"
-#include "../Header files/errors.h"
 #include "../Header files/globals.h"
 #include <stdlib.h>
 #include <string.h>

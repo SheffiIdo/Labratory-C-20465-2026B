@@ -1,3 +1,9 @@
+/*
+ * A dedicated string analysis toolkit. It validates label names, maps assembly
+ * text to internal opcode structures, extracts command-line operands, and safely
+ * parses registers and integers.
+ */
+
 #include "../Header files/parser.h"
 #include "../Header files/utils.h"
 #include <string.h>

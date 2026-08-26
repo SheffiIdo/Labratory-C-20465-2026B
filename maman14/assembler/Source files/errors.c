@@ -1,3 +1,9 @@
+/*
+ * A centralized error-handling engine. It stores a dictionary of all system and
+ * syntax error messages, providing functions to print formatted warnings or
+ * fatally abort the program on memory failures.
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "../Header files/errors.h"

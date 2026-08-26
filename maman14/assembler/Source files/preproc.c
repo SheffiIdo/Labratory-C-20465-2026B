@@ -1,3 +1,9 @@
+/*
+ * The initial pre-processing stage that reads the raw .as source file. It
+ * identifies macro declarations, saves them, and expands subsequent macro calls
+ * into a clean .am file.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

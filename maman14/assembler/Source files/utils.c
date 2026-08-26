@@ -1,3 +1,9 @@
+/*
+ * Contains general-purpose string manipulation helpers. It provides lightweight,
+ * reusable functions for skipping whitespace, trimming strings, and identifying
+ * reserved assembly keywords.
+ */
+
 #include <ctype.h>
 #include <string.h>
 #include "../Header files/utils.h"
