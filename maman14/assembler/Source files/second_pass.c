@@ -90,6 +90,7 @@ int execute_second_pass(const char *file_name, SymbolNode *head, ExternUsageNode
             free_symbol_table(head);       /* Prevent Symbol leak */
             free_extern_usage(*ext_head);  /* Prevent Extern leak */
             print_internal_error(ERROR_CODE_1); /* Exits safely */
+        }
     }
 
     fclose(file);
