@@ -69,4 +69,4 @@ The centerpiece of this repository is a complete **Two-Pass Assembler** develope
 
 ## 👤 Author
 
-* **Ido Sheffi** – [GitHub](https://github.com/SheffiIdo) • [LinkedIn]([https://www.linkedin.com](https://www.linkedin.com/in/ido-sheffi-840273366?utm_source=share_via&utm_content=profile&utm_medium=member_ios))
+* **Ido Sheffi** – [GitHub](https://github.com/SheffiIdo) • [LinkedIn]([[https://www.linkedin.com](https://www.linkedin.com/in/ido-sheffi-840273366?utm_source=share_via&utm_content=profile&utm_medium=member_ios)])
